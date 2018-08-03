@@ -3,15 +3,21 @@
     <div id='map'>
     </div>
         <!-- 点击弹出窗口 -->
-    <div id="popup" class="ol-popup">
+    <div id="popup" class="ol-popup" display="none">
         <a href="#" id="popup-closer" class="ol-popup-closer"></a>
         <div id="popup-content"></div>
     </div>
+
+  <dialog-window></dialog-window>
+  <draw-win></draw-win>
   </div>
 </template>
 
 <script>
 import initMap from '../assets/commTool/intial'
+import dialog from './Dialog'
+import draw from './draw'
+import $ from 'jquery'
 
 export default {
   name: 'dj',
@@ -20,14 +26,24 @@ export default {
       msg: '爱是恒久忍耐又有恩赐,爱是不嫉妒'
     }
   },
-  methods: {
-    createMap: function () {     
-    }
-  },
   mounted () {
-    initMap.initMap()
+    initMap.initMap1()
+  },
+  components: {
+    'dialog-window': dialog,
+    'draw-win': draw
   }
 }
+$(function () {
+  var map = initMap.getMap()
+  $('#map').click(function (e) {
+    var coord = map.getEventCoordinate(e)
+    if (coord[0] >= 180) {
+      coord[0] = coord[0] - 360
+    }
+    console.log(coord)
+  })
+})
 </script>
 
 <!-- Add 'scoped' attribute to limit CSS to this component only -->

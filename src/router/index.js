@@ -19,11 +19,6 @@ export default new Router({
       component: map
     },
     {
-      path: '/index',
-      name: 'index',
-      component: index
-    },
-    {
       path: '/',
       name: 'index',
       component: index

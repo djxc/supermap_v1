@@ -20,7 +20,7 @@ h1, h2 {
   font-weight: normal;
   color: #42b983;
 }
-#myheader{
+#myheader {
   background-color: #263238;
   position: absolute;
   width: 100%;

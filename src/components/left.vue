@@ -14,8 +14,6 @@
                     <i class="my-icon nav-more"></i>
                 </a>
                 <ul>
-                    
-
                     <li>
                         <a href="javascript:;" id="AddRoad">
                             <span>
@@ -39,7 +37,7 @@
                     <li>
                         <a href="javascript:;" id="addWFS">
                             <span>
-                                <input type="checkbox" id="isAddWMS" />&amp;&amp;WFS</span>
+                                <input type="checkbox" id="isAddWFS" />&amp;&amp;WFS</span>
                         </a>
                     </li>
                 </ul>
@@ -146,8 +144,11 @@
 </template>
 
 <script>
-import control from '../assets/commTool/controlLayer'
+import control from '../assets/commTool/controlDom'
 import initMap from '../assets/commTool/intial'
+import $ from 'jquery'
+import addWFS from '../assets/commTool/addWFS'
+
 export default {
   name: 'left',
   mounted () {
@@ -155,64 +156,82 @@ export default {
   }
 }
 $(function () {
-   // nav收缩展开
- $('.nav-item>a').on('click',function(){
+  // nav收缩展开
+  $('.nav-item>a').on('click', function () {
     if (!$('.nav').hasClass('nav-mini')) {
-        if ($(this).next().css('display') == "none") {
-            //展开未展开
-            $('.nav-item').children('ul').slideUp(300);
-            $(this).next('ul').slideDown(300);
-            $(this).parent('li').addClass('nav-show').siblings('li').removeClass('nav-show');
-        }else{
-            //收缩已展开
-            $(this).next('ul').slideUp(300);
-            $('.nav-item.nav-show').removeClass('nav-show');
-        }
-    }
-  });
-  //nav-mini切换
-  $('#mini').on('click',function(){
-      if (!$('.nav').hasClass('nav-mini')) {
-          $('.nav-item.nav-show').removeClass('nav-show');
-          $('.nav-item').children('ul').removeAttr('style');
-          $('.nav').addClass('nav-mini');
-      }else{
-          $('.nav').removeClass('nav-mini');
+      if ($(this).next().css('display') === 'none') {
+        // 展开未展开
+        $('.nav-item').children('ul').slideUp(300)
+        $(this).next('ul').slideDown(300)
+        $(this).parent('li').addClass('nav-show').siblings('li').removeClass('nav-show')
+      } else {
+        // 收缩已展开
+        $(this).next('ul').slideUp(300)
+        $('.nav-item.nav-show').removeClass('nav-show')
       }
-  }); 
+    }
+  })
+  // nav-mini切换
+  $('#mini').on('click', function () {
+    if (!$('.nav').hasClass('nav-mini')) {
+      $('.nav-item.nav-show').removeClass('nav-show')
+      $('.nav-item').children('ul').removeAttr('style')
+      $('.nav').addClass('nav-mini')
+    } else {
+      $('.nav').removeClass('nav-mini')
+    }
+  })
+
+  $('#Render').on('click', function () {
+    var showlayers = $('#showsm')
+    control.ShowCloseDom(showlayers, 'show')
+  })
+
+  $('#myDraw').on('click', function () {
+    var drawDialog = $('#draw')
+    control.ShowCloseDom(drawDialog, 'show')
+  })
+
+  $('#isAddWFS').change(function () {
+    if ($('#isAddWFS').is(':checked')) {
+      console.log('add wfs')
+      addWFS.addWFS(initMap.getMap())
+      console.log(initMap.getMap())
+    } else if (!$('#isAddWFS').is(':checked')) {
+      console.log('remove wfs')
+    }
+  })
+
   var showImg = $('#isAddRS')
   var showVec = $('#isAddRoad')
 
   showImg.change(function () {
-    if(showImg.is(':checked'))
-    {
+    if (showImg.is(':checked')) {
       initMap.changeLayer('img')
-      if(showVec.is(':checked')){
-        showVec.prop("checked",false)
+      if (showVec.is(':checked')) {
+        showVec.prop('checked', false)
       }
-    }else if(!showImg.is(':checked')){
+    } else if (!showImg.is(':checked')) {
       initMap.changeLayer('vec')
-      if(!showVec.is(':checked')){
-        showVec.prop("checked",true)
+      if (!showVec.is(':checked')) {
+        showVec.prop('checked', true)
       }
-    }    
+    }
   })
 
   showVec.change(function () {
-    if(showVec.is(':checked'))
-    {
+    if (showVec.is(':checked')) {
       initMap.changeLayer('vec')
-      if(showImg.is(':checked')){
-        showImg.prop("checked",false)
+      if (showImg.is(':checked')) {
+        showImg.prop('checked', false)
       }
-    }else if(!showVec.is(':checked')){
-       initMap.changeLayer('img')
-      if(!showImg.is(':checked')){
-        showImg.prop("checked",true)
+    } else if (!showVec.is(':checked')) {
+      initMap.changeLayer('img')
+      if (!showImg.is(':checked')) {
+        showImg.prop('checked', true)
       }
-    }    
+    }
   })
-
 })
 </script>
 <style>
