@@ -10,6 +10,8 @@
 
   <dialog-window></dialog-window>
   <draw-win></draw-win>
+  <rain-input></rain-input>
+  <rain-win></rain-win>
   </div>
 </template>
 
@@ -17,6 +19,8 @@
 import initMap from '../assets/commTool/intial'
 import dialog from './Dialog'
 import draw from './draw'
+import rainInput from './rainInput'
+import rain from './Rain'
 import $ from 'jquery'
 
 export default {
@@ -31,7 +35,9 @@ export default {
   },
   components: {
     'dialog-window': dialog,
-    'draw-win': draw
+    'draw-win': draw,
+    'rain-win': rain,
+    'rain-input': rainInput
   }
 }
 $(function () {

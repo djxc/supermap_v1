@@ -11,6 +11,7 @@ import './assets/css/info.css'
 import './assets/css/cssCharts.css'
 import './assets/css/font-awesome.css'
 import './assets/css/fonts_goole.css'
+import './assets/css/mycss.css'
 
 require('./assets/css/iclient9-openlayers.css')
 

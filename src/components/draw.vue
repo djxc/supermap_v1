@@ -1,8 +1,8 @@
 <template>
   <div id="draw">
-    <div id="rain_top">
-        <li id="rain_close">
-            <a class="selected"><img src="../assets/img/close.png" title="关闭" /></a>
+    <div id="dialog_top">
+        <li>
+            <a class="close" id="drawClose"><img src="../assets/img/close.png" title="关闭" /></a>
         </li>
         {{ dname }}
     </div>
@@ -27,7 +27,7 @@ export default {
   }
 }
 $(function () {
-  $('.selected').on('click', function () {
+  $('#drawClose').on('click', function () {
     var drawDialog = $('#draw')
     controlLayer.ShowCloseDom(drawDialog, 'close')
   })
@@ -43,12 +43,7 @@ $(function () {
   width: 30%;
   height: 15%;
 }
-#rain_top {
-    background-color: aqua;
-}
-.selected {
-    float: right;
-}
+
 div[id="rain_close"] li:hover{
   transform:scale(1.2,1.2);
 }

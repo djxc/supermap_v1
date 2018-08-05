@@ -82,6 +82,16 @@
                             <span>加载geojson图层</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="javascript:;" id="layerTheme">
+                            <span>分层设色</span>
+                        </a>
+                    </li>
+                     <li>
+                        <a href="javascript:;" id="query">
+                            <span>查询</span>
+                        </a>
+                    </li>
                 </ul>
             </li>
             <!-- 地理处理 -->
@@ -138,6 +148,21 @@
                     </li>
                 </ul>
             </li>
+             <!-- 水文模拟 -->
+            <li class="nav-item">
+                <a href="javascript:;">
+                    <i class="my-icon nav-icon icon_2"></i>
+                    <span>水文模拟</span>
+                    <i class="my-icon nav-more"></i>
+                </a>
+                <ul id="layerContr">
+                    <li>
+                        <a href="javascript:;" id="createRain">
+                            <span>芝加哥雨型模拟器</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
 
         </ul>
     </div>
@@ -148,6 +173,8 @@ import control from '../assets/commTool/controlDom'
 import initMap from '../assets/commTool/intial'
 import $ from 'jquery'
 import addWFS from '../assets/commTool/addWFS'
+import createTheme from '../assets/commTool/singleTheme'
+import query from '../assets/commTool/queryFeature'
 
 export default {
   name: 'left',
@@ -180,6 +207,20 @@ $(function () {
     } else {
       $('.nav').removeClass('nav-mini')
     }
+  })
+  $('#query').on('click', function () {
+    // query.queryFeat(initMap.getMap())
+    query.sqlQuery(initMap.getMap())
+  })
+
+  $('#createRain').on('click', function () {
+    var rainDialog = $('#rainInput')
+    control.ShowCloseDom(rainDialog, 'show')
+  })
+
+  $('#layerTheme').on('click', function () {
+    console.log('layerTheme')
+    createTheme.createTheme(initMap.getMap())
   })
 
   $('#Render').on('click', function () {

@@ -1,8 +1,8 @@
 <template>
   <div id="showsm">
-      <div id="rain_top">
+      <div class="dialog_top">
         <li id="rain_close">
-            <a class="selected"><img src="../assets/img/close.png" title="关闭" /></a>
+            <a class="close"><img src="../assets/img/close.png" title="关闭" /></a>
         </li>
         {{ dname }}
     </div>
@@ -37,12 +37,10 @@ $(function () {
   width: 10%;
   height: 40%;
 }
-#rain_top {
+#dialog_top {
     background-color: aqua;
 }
-.selected {
-    float: right;
-}
+
 div[id="rain_close"] li:hover{
   transform:scale(1.2,1.2);
 }

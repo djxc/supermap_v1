@@ -15,8 +15,8 @@ function initMap1 () {
     controls: ol.control.defaults({attributionOptions: {collapsed: false}})
       .extend([new ol.supermap.control.Logo()]),
     view: new ol.View({
-      center: [117, 36],
-      zoom: 8,
+      center: [117, 34],
+      zoom: 10,
       maxZoom: 18,
       minZoom: 4,
       projection: 'EPSG:4326'
