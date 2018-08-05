@@ -195,7 +195,7 @@ $(function () {
   $('#isAddWFS').change(function () {
     if ($('#isAddWFS').is(':checked')) {
       console.log('add wfs')
-      addWFS.addWFS(initMap.getMap())
+      addWFS.addSM(initMap.getMap())
       console.log(initMap.getMap())
     } else if (!$('#isAddWFS').is(':checked')) {
       console.log('remove wfs')

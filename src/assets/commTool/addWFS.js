@@ -1,10 +1,6 @@
 import ol from 'openlayers'
+import '@supermap/iclient-openlayers'
 import $ from 'jquery'
-// import VectorLayer from 'ol/layer/Vector.js';
-// import VectorSource from 'ol/source/Vector.js';
-// import { Fill, Stroke, Style, Text } from 'ol/style.js';
-// import { createXYZ } from 'ol/tilegrid.js';
-// import { tile } from 'ol/loadingstrategy.js';
 
 function addWFS (map) {
   // ======================================方法二
@@ -50,6 +46,19 @@ function addWFS (map) {
   map.addLayer(vectorLayer)
 }
 
+function addSM (map) {
+  var url = 'http://121.248.96.97:8091/iserver/services/map-testSWMM/rest/maps/watershed@djtest'
+  var layer = new ol.layer.Tile({
+    source: new ol.source.TileSuperMapRest({
+      url: url,
+      wrapX: true
+    }),
+    projection: 'EPSG:4326'
+  })
+  map.addLayer(layer)
+}
+
 export default {
-  addWFS
+  addWFS,
+  addSM
 }
