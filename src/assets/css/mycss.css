@@ -3,5 +3,18 @@
 }
 
 .dialog_top {
-    background-color: aqua;
+    background-color:#3C474C ;
+    color: #42b983;
+    border-radius:20px 20px 0px 0px ;
+    -moz-border-radius:25px;     
+}
+
+#rainInput, #draw, #rain, #timeslider{
+  position: absolute;
+  background-color: rgb(223, 240, 223);
+  display: none;
+  border:2px solid;
+  border-radius:25px;
+  -moz-border-radius:25px; 
+  box-shadow: 8px 8px 3px #888888;
 }

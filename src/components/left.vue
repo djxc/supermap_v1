@@ -5,7 +5,7 @@
                 <img src="../assets/img/mini.png">
             </div>
         </div>
-        <ul>
+        <ul id="mainul">
             <!-- 常规 -->
             <li class="nav-item">
                 <a href="javascript:;">
@@ -52,14 +52,7 @@
                 <ul>
                     <li>
                         <a href="javascript:;">
-                            <span id="myDraw">开始编辑 &amp;&amp;</span>
-                            <select id="type">
-                                <option value="Point">Point</option>
-                                <option value="LineString">LineString</option>
-                                <option value="Polygon">Polygon</option>
-                                <option value="Circle">Circle</option>
-                                <option value="None">None</option>
-                            </select>
+                            <span id="myDraw">开始编辑</span>                           
                         </a>
                     </li>
                     <li>
@@ -106,13 +99,7 @@
                         <a href="javascript:;" id="ShowCoord">
                             <span>显示坐标</span>
                         </a>
-                    </li>
-                    <li>
-                        <a href="javascript:;">
-                            <span id="myCluster">聚类分析</span>&amp;&amp;
-                            <input id="distance" value="40" />
-                        </a>
-                    </li>
+                    </li>                  
                     <li>
                         <a href="javascript:;" id="Render">
                             <span>渲染</span>
@@ -155,10 +142,17 @@
                     <span>水文模拟</span>
                     <i class="my-icon nav-more"></i>
                 </a>
-                <ul id="layerContr">
+                <ul>
                     <li>
                         <a href="javascript:;" id="createRain">
                             <span>芝加哥雨型模拟器</span>
+                        </a>
+                    </li>
+                </ul>
+                <ul>
+                    <li>
+                        <a href="javascript:;" id="timeline">
+                            <span>事件序列</span>
                         </a>
                     </li>
                 </ul>
@@ -175,6 +169,8 @@ import $ from 'jquery'
 import addWFS from '../assets/commTool/addWFS'
 import createTheme from '../assets/commTool/singleTheme'
 import query from '../assets/commTool/queryFeature'
+import createTime from '../assets/commTool/createTimeline'
+import '../assets/css/nav.css'
 
 export default {
   name: 'left',
@@ -208,11 +204,17 @@ $(function () {
       $('.nav').removeClass('nav-mini')
     }
   })
+
   $('#query').on('click', function () {
     // query.queryFeat(initMap.getMap())
     query.sqlQuery(initMap.getMap())
   })
 
+  $('#timeline').on('click', function () {
+    var rainDialog = $('#timeslider')
+    control.ShowCloseDom(rainDialog, 'show')
+    createTime.createTime()
+  })
   $('#createRain').on('click', function () {
     var rainDialog = $('#rainInput')
     control.ShowCloseDom(rainDialog, 'show')

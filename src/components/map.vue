@@ -8,10 +8,12 @@
         <div id="popup-content"></div>
     </div>
 
-  <dialog-window></dialog-window>
-  <draw-win></draw-win>
-  <rain-input></rain-input>
-  <rain-win></rain-win>
+    <dialog-window></dialog-window>
+    <draw-win></draw-win>
+    <rain-input></rain-input>
+    <rain-win></rain-win>
+    <testmenu></testmenu>
+    <timeslider></timeslider>
   </div>
 </template>
 
@@ -21,6 +23,8 @@ import dialog from './Dialog'
 import draw from './draw'
 import rainInput from './rainInput'
 import rain from './Rain'
+import menu from './testmenu'
+import timeslider from './timeSlipe'
 import $ from 'jquery'
 
 export default {
@@ -37,7 +41,9 @@ export default {
     'dialog-window': dialog,
     'draw-win': draw,
     'rain-win': rain,
-    'rain-input': rainInput
+    'rain-input': rainInput,
+    'testmenu': menu,
+    'timeslider': timeslider
   }
 }
 $(function () {

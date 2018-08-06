@@ -3,10 +3,10 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import 'bootstrap'
+
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap.min.js'
 import './assets/fonts/iconfont.css'
-import './assets/css/htmleaf-demo.css'
-import './assets/css/nav.css'
 import './assets/css/info.css'
 import './assets/css/cssCharts.css'
 import './assets/css/font-awesome.css'

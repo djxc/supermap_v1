@@ -6,13 +6,15 @@
         </li>
         {{ dname }}
     </div>
-    <ul>
-        <li><label>降雨历时(分钟)：</label><input id="rainTime" v-model="rainTime"/></li>
-        <li><label>重现期(年)：</label><input id="period" v-model="period" /></li>
-        <li><label>雨峰系数：</label><input id="coeffici" v-model="coeffici"/></li>
-        {{rainTime}}
-    </ul>
-    <button v-on:click='showRainInput'>生成降雨折线</button>
+    <div id="rainInpcon">
+      <ul>
+          <li><label>降雨历时(分钟)：</label><input id="rainTime" v-model="rainTime"/></li>
+          <li><label>重现期(年)：</label><input id="period" v-model="period" /></li>
+          <li><label>雨峰系数：</label><input id="coeffici" v-model="coeffici"/></li>
+          {{rainTime}}
+      </ul>
+      <button v-on:click='showRainInput' class="btn btn-primary">生成降雨折线</button>
+    </div>
   </div>
 </template>
 <script>
@@ -50,13 +52,16 @@ export default {
 </script>
 <style>
 #rainInput {
-  position: absolute;
-  background-color: brown;
-  /* display: none; */
   margin-top: 2%;
   right: 2%;
-  width: 10%;
+  width: 12%;
   height: 40%;
+}
+#rainInpcon {
+  margin-top: 20px;
+}
+#rainTime, #period, #coeffici {
+  width: 50px;
 }
 </style>
 
