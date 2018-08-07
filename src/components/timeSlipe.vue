@@ -11,15 +11,15 @@
     </div>
 </template>
 <script>
-import echarts from 'echarts'
+import $ from 'jquery'
 import control from '../assets/commTool/controlDom'
 
 export default {
   name: 'timeslider',
   data () {
-      return {
-          dname: '事件序列'
-      }
+    return {
+      dname: '事件序列'
+    }
   },
   methods: {
     closeDialog: function () {
@@ -42,4 +42,3 @@ $(function () {
     height: 93%;
 }
 </style>
-

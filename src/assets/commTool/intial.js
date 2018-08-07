@@ -4,7 +4,6 @@ import TDLayer from './addTDLayer'
 
 var map
 var imgLayers
-var vecLayers
 
 /**
  * 初始化地图，并加载天地图的影像作为底图
@@ -47,19 +46,19 @@ function initMap () {
  * 创建图层组，包括矢量图层和栅格图层
  */
 function createLayer () {
-  vecLayers = [
-    new ol.layer.Tile({
-      source: new ol.source.Tianditu({
-        layerType: 'vec'
-      }),
-      projection: '4326'
-    }),
-    new ol.layer.Tile({
-      source: new ol.source.Tianditu({
-        isLabel: true,
-        projection: '4326'
-      })
-    })]
+  // var vecLayers = [
+  //   new ol.layer.Tile({
+  //     source: new ol.source.Tianditu({
+  //       layerType: 'vec'
+  //     }),
+  //     projection: '4326'
+  //   }),
+  //   new ol.layer.Tile({
+  //     source: new ol.source.Tianditu({
+  //       isLabel: true,
+  //       projection: '4326'
+  //     })
+  //   })]
   imgLayers = [
     new ol.layer.Tile({
       source: new ol.source.Tianditu({

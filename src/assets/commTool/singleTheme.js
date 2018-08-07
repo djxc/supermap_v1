@@ -1,5 +1,5 @@
 import ol from 'openlayers'
-import '@supermap/iclient-openlayers'
+import {SuperMap} from '@supermap/iclient-openlayers'
 
 function createTheme (map) {
   var themeRangeItem1, themeRangeItem2,

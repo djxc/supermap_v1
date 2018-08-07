@@ -25,12 +25,12 @@ import showRain from './Rain.vue'
 export default {
   name: 'rainInput',
   data () {
-      return {
-          dname: '输入雨型参数',
-          rainTime: 60,
-          period: 2,
-          coeffici: 0.5
-      }
+    return {
+      dname: '输入雨型参数',
+      rainTime: 60,
+      period: 2,
+      coeffici: 0.5
+    }
   },
   methods: {
     closeDialog: function () {
@@ -38,14 +38,14 @@ export default {
       control.ShowCloseDom(Dialog, 'close')
     },
     showRainInput: function () {
-      if (!$("#rain").is(':visible')){
+      if (!$('#rain').is(':visible')) {
         var rainDialog = $('#rain')
         control.ShowCloseDom(rainDialog, 'show')
       }
       showRain.methods.showRain()
     },
     getTime: function () {
-        return this.rainTime
+      return this.rainTime
     }
   }
 }
@@ -64,4 +64,3 @@ export default {
   width: 50px;
 }
 </style>
-

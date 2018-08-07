@@ -17,27 +17,27 @@
                     <li>
                         <a href="javascript:;" id="AddRoad">
                             <span>
-                                <input type="checkbox" id="isAddRoad" />&amp;&amp;路网</span>
+                                <input type="checkbox" id="isAddRoad" /><span>路网</span></span>
                         </a>
                     </li>
 
                     <li>
                         <a href="javascript:;" id="AddRS">
                             <span>
-                                <input type="checkbox" id="isAddRS" checked="checked"/>&amp;&amp;影像</span>
+                                <input type="checkbox" id="isAddRS" checked="checked"/><span>影像</span></span>
                         </a>
                     </li>
                     <li>
                         <a href="javascript:;" id="AddWMS">
                             <span>
-                                <input type="checkbox" id="isAddWMS" />&amp;&amp;WMS</span>
+                                <input type="checkbox" id="isAddWMS" /><span>WMS</span></span>
                         </a>
                     </li>
 
                     <li>
                         <a href="javascript:;" id="addWFS">
                             <span>
-                                <input type="checkbox" id="isAddWFS" />&amp;&amp;WFS</span>
+                                <input type="checkbox" id="isAddWFS" /><span>WFS</span></span>
                         </a>
                     </li>
                 </ul>
@@ -52,7 +52,7 @@
                 <ul>
                     <li>
                         <a href="javascript:;">
-                            <span id="myDraw">开始编辑</span>                           
+                            <span id="myDraw">开始编辑</span>
                         </a>
                     </li>
                     <li>
@@ -67,12 +67,12 @@
                     </li>
                     <li>
                         <a href="javascript:;" id="getGeojson">
-                            <span>加载geojson数据</span>
+                            <span>geojson数据</span>
                         </a>
                     </li>
                     <li>
-                        <a href="javascript:;" id="Geojsonlayer">
-                            <span>加载geojson图层</span>
+                        <a href="javascript:;" id="sqlQuery">
+                            <span>sqlQuery</span>
                         </a>
                     </li>
                     <li>
@@ -99,7 +99,7 @@
                         <a href="javascript:;" id="ShowCoord">
                             <span>显示坐标</span>
                         </a>
-                    </li>                  
+                    </li>
                     <li>
                         <a href="javascript:;" id="Render">
                             <span>渲染</span>
@@ -145,7 +145,7 @@
                 <ul>
                     <li>
                         <a href="javascript:;" id="createRain">
-                            <span>芝加哥雨型模拟器</span>
+                            <span>雨型模拟器</span>
                         </a>
                     </li>
                 </ul>
@@ -170,12 +170,12 @@ import addWFS from '../assets/commTool/addWFS'
 import createTheme from '../assets/commTool/singleTheme'
 import query from '../assets/commTool/queryFeature'
 import createTime from '../assets/commTool/createTimeline'
+import selectFeature from '../assets/commTool/selectFeature'
 import '../assets/css/nav.css'
 
 export default {
   name: 'left',
   mounted () {
-    // control.initMap()
   }
 }
 $(function () {
@@ -237,12 +237,19 @@ $(function () {
 
   $('#isAddWFS').change(function () {
     if ($('#isAddWFS').is(':checked')) {
-      console.log('add wfs')
       addWFS.addSM(initMap.getMap())
-      console.log(initMap.getMap())
     } else if (!$('#isAddWFS').is(':checked')) {
-      console.log('remove wfs')
+      addWFS.removeSMlayer(initMap.getMap())
     }
+  })
+  $('#getGeojson').on('click', function () {
+    selectFeature.changeInteraction(initMap.getMap(), 'click')
+  })
+  $('#sqlQuery').on('click', function () {
+    query.setMap(initMap.getMap())
+    query.sqlQuery1()
+    var drawDialog = $('#attrtable')
+    control.ShowCloseDom(drawDialog, 'show')
   })
 
   var showImg = $('#isAddRS')
@@ -278,5 +285,4 @@ $(function () {
 })
 </script>
 <style>
-
 </style>
