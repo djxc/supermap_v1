@@ -1,5 +1,6 @@
 import {SuperMap} from '@supermap/iclient-openlayers'
 import ol from 'openlayers'
+import createEcharts from './createEchart'
 import $ from 'jquery'
 
 var resultLayer, SMmap, themeSource
@@ -146,6 +147,22 @@ function addThemeLayer () {
     //   document.getElementById('infoBox').style.display = 'block'
       var fid = e.target.refDataID
       var fea = themeSource.getFeatureById(fid)
+      var id = fea.attributes.SMID
+      $.ajax({
+        url: 'http://localhost:8080/dj',
+        type: 'POST',
+        // contentType: 'application/json;charset=utf-8',
+        data: {'id': id},
+        dataType: 'json',
+        success: function (result) {
+          var rainflow = result.msg
+          createEcharts.showRainflow(rainflow)
+        },
+        error: function (msg) {
+          console.log('failed')
+          console.log(msg)
+        }
+      })
       $('#slope').html(getnum(fea.attributes.MEAN_SLOPE))
       $('#area').html(getnum(fea.attributes.AREA))
     } else {

@@ -15,6 +15,7 @@
     <testmenu></testmenu>
     <timeslider></timeslider>
     <attrtable></attrtable>
+    <rainflow></rainflow>
   </div>
 </template>
 
@@ -27,6 +28,7 @@ import rain from './Rain'
 import menu from './testmenu'
 import timeslider from './timeSlipe'
 import attrtable from './SelectAttr'
+import rainflow from './showRainflow'
 import $ from 'jquery'
 
 export default {
@@ -46,7 +48,8 @@ export default {
     'rain-input': rainInput,
     'testmenu': menu,
     'timeslider': timeslider,
-    'attrtable': attrtable
+    'attrtable': attrtable,
+    'rainflow': rainflow
   }
 }
 $(function () {
