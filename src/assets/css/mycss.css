@@ -9,7 +9,8 @@
     -moz-border-radius:25px;     
 }
 
-#rainInput, #draw, #rain, #timeslider, #attrtable{
+#rainInput, #draw, #rain, #timeslider, #attrtable,
+#rainflow{
   position: absolute;
   background-color: rgb(223, 240, 223);
   display: none;

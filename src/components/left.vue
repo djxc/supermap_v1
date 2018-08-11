@@ -28,13 +28,6 @@
                         </a>
                     </li>
                     <li>
-                        <a href="javascript:;" id="AddWMS">
-                            <span>
-                                <input type="checkbox" id="isAddWMS" /><span>WMS</span></span>
-                        </a>
-                    </li>
-
-                    <li>
                         <a href="javascript:;" id="addWFS">
                             <span>
                                 <input type="checkbox" id="isAddWFS" /><span>WFS</span></span>
@@ -53,11 +46,6 @@
                     <li>
                         <a href="javascript:;">
                             <span id="myDraw">开始编辑</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:;" id="exportMap">
-                            <span>导出地图</span>
                         </a>
                     </li>
                     <li>
@@ -116,21 +104,8 @@
                 </a>
                 <ul id="layerContr">
                     <li>
-                        <a href="javascript:;" id="createPa">
-                            <span>
-                                <input type="checkbox" id="isAddAnno" />&amp;&amp;添加节点</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="javascript:;" id="Ad">
-                            <span>
-                                <input type="checkbox" id="isAddRoad" />&amp;&amp;路网</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:;" id="showLayers">
-                            <span>显示所有图层</span>
+                        <a href="javascript:;" id="closeLayers">
+                            <span>关闭所有图层</span>
                         </a>
                     </li>
                 </ul>
@@ -153,6 +128,20 @@
                     <li>
                         <a href="javascript:;" id="timeline">
                             <span>事件序列</span>
+                        </a>
+                    </li>
+                </ul>
+                <ul>
+                    <li>
+                        <a href="javascript:;" id="showRainflow">
+                            <span>经流量查询</span>
+                        </a>
+                    </li>
+                </ul>
+                <ul>
+                    <li>
+                        <a href="javascript:;" id="">
+                            <span>海绵体布设</span>
                         </a>
                     </li>
                 </ul>
@@ -209,11 +198,15 @@ $(function () {
     // query.queryFeat(initMap.getMap())
     query.sqlQuery(initMap.getMap())
   })
-
+  $('#showRainflow').on('click', function () {
+    var rainflowDialog = $('#rainflow')
+    query.createInteraction(initMap.getMap())
+    control.ShowCloseDom(rainflowDialog, 'show')
+  })
   $('#timeline').on('click', function () {
-    var rainDialog = $('#timeslider')
-    control.ShowCloseDom(rainDialog, 'show')
-    createTime.createTime()
+    var timesliderDialog = $('#timeslider')
+    control.ShowCloseDom(timesliderDialog, 'show')
+    createTime.createTime(initMap.getMap())
   })
   $('#createRain').on('click', function () {
     var rainDialog = $('#rainInput')
@@ -221,7 +214,6 @@ $(function () {
   })
 
   $('#layerTheme').on('click', function () {
-    console.log('layerTheme')
     createTheme.createTheme(initMap.getMap())
   })
 
@@ -248,8 +240,8 @@ $(function () {
   $('#sqlQuery').on('click', function () {
     query.setMap(initMap.getMap())
     query.sqlQuery1()
-    var drawDialog = $('#attrtable')
-    control.ShowCloseDom(drawDialog, 'show')
+    // var drawDialog = $('#attrtable')
+    // control.ShowCloseDom(drawDialog, 'show')
   })
 
   var showImg = $('#isAddRS')

@@ -13,7 +13,8 @@
           <li><label>雨峰系数：</label><input id="coeffici" v-model="coeffici"/></li>
           {{rainTime}}
       </ul>
-      <button v-on:click='showRainInput' class="btn btn-primary">生成降雨折线</button>
+      <button v-on:click='showRainInput' class="btn btn-primary">生成降雨折线</button><br><br>
+      <button v-on:click='startRain' class="btn btn-success">开始降雨</button>
     </div>
   </div>
 </template>
@@ -21,6 +22,7 @@
 import control from '../assets/commTool/controlDom'
 import $ from 'jquery'
 import showRain from './Rain.vue'
+import echarts from 'echarts'
 
 export default {
   name: 'rainInput',
@@ -44,6 +46,16 @@ export default {
       }
       showRain.methods.showRain()
     },
+    startRain: function () {
+      var myChart = echarts.init(document.getElementById('rainInpcon'))
+      myChart.showLoading({
+        text: '等待一下～～',
+        effect: 'whirling', // 'spin',
+        textStyle: {
+          fontSize: 20
+        }
+      })
+    },
     getTime: function () {
       return this.rainTime
     }
@@ -59,6 +71,7 @@ export default {
 }
 #rainInpcon {
   margin-top: 20px;
+  height: 80%;
 }
 #rainTime, #period, #coeffici {
   width: 50px;

@@ -16,6 +16,7 @@
     <timeslider></timeslider>
     <attrtable></attrtable>
     <rainflow></rainflow>
+    <GreenMana></GreenMana>
   </div>
 </template>
 
@@ -29,6 +30,7 @@ import menu from './testmenu'
 import timeslider from './timeSlipe'
 import attrtable from './SelectAttr'
 import rainflow from './showRainflow'
+import GreenMana from './GreenManager'
 import $ from 'jquery'
 
 export default {
@@ -49,7 +51,8 @@ export default {
     'testmenu': menu,
     'timeslider': timeslider,
     'attrtable': attrtable,
-    'rainflow': rainflow
+    'rainflow': rainflow,
+    'GreenMana': GreenMana
   }
 }
 $(function () {

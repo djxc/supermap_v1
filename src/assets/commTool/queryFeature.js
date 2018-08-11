@@ -4,7 +4,7 @@ import createEcharts from './createEchart'
 import $ from 'jquery'
 
 var resultLayer, SMmap, themeSource
-var url = 'http://121.248.96.97:8091/iserver/services/data-swmm/rest/data'
+var url = 'http://121.248.96.215:8091/iserver/services/data-swmm/rest/data'
 
 function setMap (map) {
   SMmap = map
@@ -13,7 +13,7 @@ function setMap (map) {
 function queryFeat (map) {
   var idsParam = new SuperMap.GetFeaturesByIDsParameters({
     IDs: [6, 10],
-    datasetNames: ['swmm1:watershed1']
+    datasetNames: ['swmm:watershed1']
   })
   new ol.supermap.FeatureService(url).getFeaturesByIDs(idsParam, function (serviceResult) {
     var vectorSource = new ol.source.Vector({
@@ -23,6 +23,7 @@ function queryFeat (map) {
     resultLayer = new ol.layer.Vector({
       source: vectorSource
     })
+    resultLayer.setZIndex(3)
     map.addLayer(resultLayer)
   })
 }
@@ -30,10 +31,10 @@ function queryFeat (map) {
 function sqlQuery (map) {
   var sqlParam = new SuperMap.GetFeaturesBySQLParameters({
     queryParameter: {
-      name: 'watershed1@swmm1',
+      name: 'watershed1@swmm',
       attributeFilter: 'dj = 10'
     },
-    datasetNames: ['swmm1:watershed1']
+    datasetNames: ['swmm:watershed1']
   })
   new ol.supermap.FeatureService(url).getFeaturesBySQL(sqlParam, function (serviceResult) {
     var vectorSource = new ol.source.Vector({
@@ -43,6 +44,7 @@ function sqlQuery (map) {
     resultLayer = new ol.layer.Vector({
       source: vectorSource
     })
+    resultLayer.setZIndex(3)
     map.addLayer(resultLayer)
   })
 }
@@ -51,17 +53,17 @@ function sqlQuery (map) {
  * 查询
  */
 function sqlQuery1 () {
-  var url2 = 'http://121.248.96.97:8091/iserver/services/data-swmm/rest/data'
+  var url2 = 'http://121.248.96.215:8091/iserver/services/data-swmm/rest/data'
   var getFeatureParam, getFeatureBySQLService, getFeatureBySQLParams
 
   getFeatureParam = new SuperMap.FilterParameter({
-    name: 'watershed1@swmm1',
+    name: 'watershed@swmm',
     attributeFilter: 'SMID > -1'
   })
   getFeatureBySQLParams = new SuperMap.GetFeaturesBySQLParameters({
     queryParameter: getFeatureParam,
     toIndex: 500,
-    datasetNames: ['swmm1:watershed1']
+    datasetNames: ['swmm:watershed']
   })
 
   getFeatureBySQLService = new SuperMap.GetFeaturesBySQLService(url2, {
@@ -74,18 +76,13 @@ function sqlQuery1 () {
 function processCompleted (getFeaturesEventArgs) {
   var result = getFeaturesEventArgs.result
   if (result && result.features) {
-    // var features = result.features
-    // for (var i = 0; i < features.length;i++){
-    //   console.log(features[i])
-    // }
     addThemeLayer()
     themeSource.addFeatures(result.features)
-    // // 显示图例
-    // document.getElementById('mapLegend').style.display = 'block'
   }
 }
 
 function addThemeLayer () {
+  // 分层设色
   themeSource = new ol.source.Range('ThemeLayer',
     {
       map: SMmap,
@@ -141,45 +138,6 @@ function addThemeLayer () {
           }
         }]
     })
-  // 专题图层 mousemove 事件
-  themeSource.on('mousemove', function (e) {
-    if (e.target && e.target.refDataID) {
-    //   document.getElementById('infoBox').style.display = 'block'
-      var fid = e.target.refDataID
-      var fea = themeSource.getFeatureById(fid)
-      var id = fea.attributes.SMID
-      $.ajax({
-        url: 'http://localhost:8080/dj',
-        type: 'POST',
-        // contentType: 'application/json;charset=utf-8',
-        data: {'id': id},
-        dataType: 'json',
-        success: function (result) {
-          var rainflow = result.msg
-          createEcharts.showRainflow(rainflow)
-        },
-        error: function (msg) {
-          console.log('failed')
-          console.log(msg)
-        }
-      })
-      $('#slope').html(getnum(fea.attributes.MEAN_SLOPE))
-      $('#area').html(getnum(fea.attributes.AREA))
-    } else {
-      // document.getElementById('infoContent').innerHTML = ''
-      // document.getElementById('infoBox').style.display = 'none'
-    }
-  })
-
-  var pointerInteraction = new ol.interaction.Pointer({
-    // handleMoveEvent: function (event) {
-    //     themeSource.fire('mouseup', event)
-    // }
-    handleDownEvent: function (event) {
-      themeSource.fire('mousemove', event)
-    }
-  })
-  SMmap.addInteraction(pointerInteraction)
   var themeLayer = new ol.layer.Image({
     source: themeSource
   })
@@ -199,9 +157,57 @@ function getnum (num) {
   return aNew
 }
 
+/**
+ * 使用ajax向后台传递数据：id，根据id查询数据库，返回经流量数据
+ * @param {*} id
+ */
+function postajax (id) {
+  $.ajax({
+    url: 'http://localhost:8088/dj',
+    type: 'POST',
+    // contentType: 'application/json;charset=utf-8',
+    data: {'id': id},
+    dataType: 'json',
+    success: function (result) {
+      var rainflow = result.msg
+      createEcharts.showRainflow(rainflow)
+    },
+    error: function (msg) {
+      console.log('failed')
+      console.log(msg)
+    }
+  })
+}
+
+/**
+ * 添加点击事件，获取点击对象的属性
+ * @param {*} SMmap
+ */
+function createInteraction (SMmap) {
+  // 专题图层 mousemove 事件
+  themeSource.on('mousemove', function (e) {
+    if (e.target && e.target.refDataID) {
+      var fid = e.target.refDataID
+      var fea = themeSource.getFeatureById(fid)
+      var id = fea.attributes.SMID
+      postajax(id)
+      $('#slope').html(getnum(fea.attributes.MEAN_SLOPE))
+      $('#area').html(getnum(fea.attributes.AREA))
+    }
+  })
+
+  var pointerInteraction = new ol.interaction.Pointer({
+    handleDownEvent: function (event) {
+      themeSource.fire('mousemove', event)
+    }
+  })
+  SMmap.addInteraction(pointerInteraction)
+}
+
 export default {
   queryFeat,
   sqlQuery,
   sqlQuery1,
-  setMap
+  setMap,
+  createInteraction
 }

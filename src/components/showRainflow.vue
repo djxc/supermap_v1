@@ -33,8 +33,6 @@ export default {
 </script>
 <style>
 #rainflow {
-  position: absolute;
-  background-color: rgb(223, 240, 223);
   margin-top: 30%;
   right: 2%;
   width: 40%;
