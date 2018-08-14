@@ -134,7 +134,7 @@ function createTheme (map) {
     joinItems: null,
     themes: [themeRange]
   })
-  var url = 'http://121.248.96.215:8091/iserver/services/map-swmm/rest/maps/watershed1@swmm'
+  var url = 'http://116.196.88.174:8090/iserver/services/map-swmm/rest/maps/watershed1@swmm'
   new ol.supermap.ThemeService(url).getThemeInfo(themeParameters, function (serviceResult) {
     var result = serviceResult.result
     if (result && result.newResourceID) {

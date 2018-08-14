@@ -31,6 +31,7 @@ export default {
       var Dialog = $('#timeslider')
       control.ShowCloseDom(Dialog, 'close')
       singleTheme.removeTheme(initMap.getMap())
+      myChart.dispose()
     },
     getRainValue: function () {
       time = $('#rainTime').val()
