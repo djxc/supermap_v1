@@ -1,11 +1,9 @@
 import echarts from 'echarts'
 
-function showRainflow (raindata) {
+function showRainflow (raindata, lidrainflow) {
   var myChart = echarts.init(document.getElementById('rainflowEcharts'))
   var array = []
-  var raindata1 = []
   for (var i = 0; i <= raindata.length - 1; i++) {
-    raindata1.push(raindata[i] + 0.5)
     array.push(i)
   }
   // 指定图表的配置项和数据
@@ -29,7 +27,7 @@ function showRainflow (raindata) {
     }, {
       name: '海绵体布设后',
       type: 'line',
-      data: raindata1
+      data: lidrainflow
     }
     ]
   }

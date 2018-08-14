@@ -1,4 +1,5 @@
 import ol from 'openlayers'
+import $ from 'jquery'
 
 // var isFrist=0;
 // var draw;
@@ -51,7 +52,6 @@ import ol from 'openlayers'
 //         $("#type").prop("disabled", false);
 //         $("#myDraw").text("停止编辑");
 //     }
-   
 // }
 var draw, SMmap, source, vector
 
@@ -60,23 +60,24 @@ function initDraw () {
   vector = new ol.layer.Vector({
     source: source
   })
-  vector.setZIndex(4)    
+  vector.setZIndex(4)
 }
-function drawGreen(map) {
-    SMmap = map   
-    SMmap.addLayer(vector)    
-    var buttons = $('.btn-group').children()
-    buttons.map(function (key) {     
-      $(buttons[key]).on('click', function () {
-        stopDraw()
-        draw = new ol.interaction.Draw({
-          source: source,
-          type: buttons[key].value,
-          snapTolerance: 20
-        })
-        map.addInteraction(draw)
+function drawGreen (map) {
+  SMmap = map
+  initDraw()
+  SMmap.addLayer(vector)
+  var buttons = $('.btn-groupgreen').children()
+  buttons.map(function (key) {
+    $(buttons[key]).on('click', function () {
+      stopDraw()
+      draw = new ol.interaction.Draw({
+        source: source,
+        type: buttons[key].value,
+        snapTolerance: 20
       })
-    })  
+      map.addInteraction(draw)
+    })
+  })
 }
 
 function clearDraw () {
@@ -90,8 +91,8 @@ function stopDraw () {
 }
 
 export default {
-    // mydraw,
-    drawGreen,
-    stopDraw,
-    clearDraw    
+  // mydraw,
+  drawGreen,
+  stopDraw,
+  clearDraw
 }

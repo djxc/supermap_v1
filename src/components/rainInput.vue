@@ -11,10 +11,9 @@
           <li><label>降雨历时(分钟)：</label><input id="rainTime" v-model="rainTime"/></li>
           <li><label>重现期(年)：</label><input id="period" v-model="period" /></li>
           <li><label>雨峰系数：</label><input id="coeffici" v-model="coeffici"/></li>
-          {{rainTime}}
-      </ul>
-      <button v-on:click='showRainInput' class="btn btn-primary">生成降雨折线</button><br><br>
-      <button v-on:click='startRain' class="btn btn-success">开始降雨</button>
+      </ul><br>
+      <button v-on:click='showRainInput' class="btn btn-primary btn-sm">生成降雨折线</button><br><br>
+      <button v-on:click='startRain' class="btn btn-success btn-sm">开始降雨</button>
     </div>
   </div>
 </template>
@@ -22,8 +21,11 @@
 import control from '../assets/commTool/controlDom'
 import $ from 'jquery'
 import showRain from './Rain.vue'
+import createTime from '../assets/commTool/createTimeline'
+import initMap from '../assets/commTool/intial'
 import echarts from 'echarts'
-
+import timeline from './timeSlipe'
+var myChart
 export default {
   name: 'rainInput',
   data () {
@@ -47,18 +49,14 @@ export default {
       showRain.methods.showRain()
     },
     startRain: function () {
-      var myChart = echarts.init(document.getElementById('rainInpcon'))
-      myChart.showLoading({
-        text: '等待一下～～',
-        effect: 'whirling', // 'spin',
-        textStyle: {
-          fontSize: 20
-        }
-      })
+      this.closeDialog()
+      var timeDialog = $('#timeslider')
+      control.ShowCloseDom(timeDialog, 'show')
+      timeline.methods.showLoad()
     },
     getTime: function () {
       return this.rainTime
-    }
+    }    
   }
 }
 </script>

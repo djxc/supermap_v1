@@ -10,7 +10,7 @@
 }
 
 #rainInput, #draw, #rain, #timeslider, #attrtable,
-#rainflow{
+#rainflow, #GreenManager, #queryFeat {
   position: absolute;
   background-color: rgb(223, 240, 223);
   display: none;

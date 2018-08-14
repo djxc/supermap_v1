@@ -17,6 +17,7 @@
     <attrtable></attrtable>
     <rainflow></rainflow>
     <GreenMana></GreenMana>
+    <queryFeat></queryFeat>
   </div>
 </template>
 
@@ -31,6 +32,7 @@ import timeslider from './timeSlipe'
 import attrtable from './SelectAttr'
 import rainflow from './showRainflow'
 import GreenMana from './GreenManager'
+import queryFeat from './query'
 import $ from 'jquery'
 
 export default {
@@ -52,7 +54,8 @@ export default {
     'timeslider': timeslider,
     'attrtable': attrtable,
     'rainflow': rainflow,
-    'GreenMana': GreenMana
+    'GreenMana': GreenMana,
+    'queryFeat': queryFeat
   }
 }
 $(function () {

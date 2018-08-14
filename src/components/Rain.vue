@@ -60,7 +60,7 @@ export default {
     rainClose: function () {
       var rainDialog = $('#rain')
       controlLayer.ShowCloseDom(rainDialog, 'close')
-    }
+    }   
   }
 }
 </script>

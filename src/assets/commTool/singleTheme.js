@@ -1,12 +1,14 @@
 import ol from 'openlayers'
 import {SuperMap} from '@supermap/iclient-openlayers'
 
+var SMmap
 var themeRangeItem1, themeRangeItem2,
   themeRangeItem3, themeRangeItem4, themeRangeItem5,
   themeRangeItem6, themeRangeItem7, themeRangeItem8,
   themeRangeItem9, themeRangeItem10,
   themeRange, themeLayer
-
+var themeUniqueItemes, LIDthemelayer,
+  style1
 function createRangeItems () {
   themeRangeItem1 = new SuperMap.ThemeRangeItem({
     start: 0,
@@ -108,11 +110,13 @@ function createRangeItems () {
     })
   })
 }
+
 /**
  * 根据rainflow实时变化显示地图，表示经流量变化
  * @param {*} map
  */
 function createTheme (map) {
+  SMmap = map
   createRangeItems()
   themeRange = new SuperMap.ThemeRange({
     rangeExpression: 'rainflow',
@@ -140,16 +144,121 @@ function createTheme (map) {
         })
       })
       themeLayer.setZIndex(3)
-      map.addLayer(themeLayer)
+      SMmap.addLayer(themeLayer)
     }
   })
 }
 
-function removeTheme (map) {
-  map.removeLayer(themeLayer)
+/**
+ * 创建唯一值样式
+ */
+function createthemeUniqueIteme () {
+  var style2, style3, style4, style5, style6
+  style1 = new SuperMap.ServerStyle({
+    fillForeColor: new SuperMap.ServerColor(248, 203, 249),
+    lineColor: new SuperMap.ServerColor(255, 255, 255),
+    lineWidth: 0.1
+  })
+  style2 = new SuperMap.ServerStyle({
+    fillForeColor: new SuperMap.ServerColor(196, 255, 189),
+    lineColor: new SuperMap.ServerColor(255, 255, 255),
+    lineWidth: 0.1
+  })
+  style3 = new SuperMap.ServerStyle({
+    fillForeColor: new SuperMap.ServerColor(255, 173, 173),
+    lineColor: new SuperMap.ServerColor(255, 255, 255),
+    lineWidth: 0.1
+  })
+  style4 = new SuperMap.ServerStyle({
+    fillForeColor: new SuperMap.ServerColor(255, 239, 168),
+    lineColor: new SuperMap.ServerColor(255, 255, 255),
+    lineWidth: 0.1
+  })
+  style5 = new SuperMap.ServerStyle({
+    fillForeColor: new SuperMap.ServerColor(173, 209, 255),
+    lineColor: new SuperMap.ServerColor(255, 255, 255),
+    lineWidth: 0.1
+  })
+  style6 = new SuperMap.ServerStyle({
+    fillForeColor: new SuperMap.ServerColor(132, 164, 232),
+    lineColor: new SuperMap.ServerColor(255, 255, 255),
+    lineWidth: 0.1
+  })
+
+  var themeUniqueIteme1 = new SuperMap.ThemeUniqueItem({
+      unique: '1',
+      style: style1
+    }),
+    themeUniqueIteme2 = new SuperMap.ThemeUniqueItem({
+      unique: '2',
+      style: style2
+    }),
+    themeUniqueIteme3 = new SuperMap.ThemeUniqueItem({
+      unique: '3',
+      style: style3
+    }),
+    themeUniqueIteme4 = new SuperMap.ThemeUniqueItem({
+      unique: '4',
+      style: style4
+    }),
+    themeUniqueIteme5 = new SuperMap.ThemeUniqueItem({
+      unique: '5',
+      style: style5
+    })
+
+  themeUniqueItemes = [
+    themeUniqueIteme1, themeUniqueIteme2, themeUniqueIteme3, themeUniqueIteme4, themeUniqueIteme5
+  ]
+}
+
+/**
+ * 加载LID图层
+ * @param {*} map
+ */
+function createLIDTheme (map) {
+  SMmap = map
+  createthemeUniqueIteme()
+
+  var themeUnique = new SuperMap.ThemeUnique({
+    uniqueExpression: 'type',
+    items: themeUniqueItemes,
+    defaultStyle: style1
+  })
+  var themeParameters = new SuperMap.ThemeParameters({
+    datasetNames: ['LID'],
+    dataSourceNames: ['swmm'],
+    themes: [themeUnique]
+  })
+  var url = 'http://121.248.96.215:8091/iserver/services/map-swmm/rest/maps/LID@swmm'
+  new ol.supermap.ThemeService(url).getThemeInfo(themeParameters, function (serviceResult) {
+    var result = serviceResult.result
+    if (result && result.newResourceID) {
+      LIDthemelayer = new ol.layer.Tile({
+        source: new ol.source.TileSuperMapRest({
+          url: url,
+          noWrap: true,
+          cacheEnabled: false,
+          layersID: result.newResourceID,
+          transparent: true
+        })
+      })
+      LIDthemelayer.setZIndex(4)
+      map.addLayer(LIDthemelayer)
+    }
+  })
+}
+
+function removeTheme () {
+  SMmap.removeLayer(themeLayer)
+}
+
+function removeLIDlayer () {
+  SMmap.removeLayer(LIDthemelayer)
 }
 
 export default {
   createTheme,
-  removeTheme
+  removeTheme,
+  createLIDTheme,
+  removeLIDlayer
 }

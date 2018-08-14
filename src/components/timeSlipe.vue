@@ -13,7 +13,12 @@
 <script>
 import $ from 'jquery'
 import control from '../assets/commTool/controlDom'
+import echarts from 'echarts'
+import createTime from '../assets/commTool/createTimeline'
+import singleTheme from '../assets/commTool/singleTheme'
+import initMap from '../assets/commTool/intial'
 
+var myChart
 export default {
   name: 'timeslider',
   data () {
@@ -25,6 +30,36 @@ export default {
     closeDialog: function () {
       var Dialog = $('#timeslider')
       control.ShowCloseDom(Dialog, 'close')
+      singleTheme.removeTheme(initMap.getMap())
+    },
+    showLoad: function () {
+      myChart = echarts.init(document.getElementById('timelineecharts'))
+      myChart.showLoading({
+        text: '等待一下～～',
+        effect: 'whirling', // 'spin',
+        textStyle: {
+          fontSize: 20
+        }
+      })
+      this.postajax(60, 1, 0.5)
+    },
+    postajax: function (time, cxq, yfxs) {
+      $.ajax({
+        url: 'http://localhost:8088/calculateRainflow',
+        type: 'POST',
+        // contentType: 'application/json;charset=utf-8',
+        data: {'time': time, 'cxq': cxq,'yfxs': yfxs},
+        dataType: 'text', // 'json',
+        success: function (result) {
+          console.log('ok')
+          myChart.hideLoading()
+          createTime.createTime(initMap.getMap())
+        },
+        error: function (msg) {
+          console.log('failed')
+          console.log(msg)        
+        }
+      })
     }
   }
 }

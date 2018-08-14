@@ -10,7 +10,7 @@ export default {
   name: 'myheader',
   data () {
     return {
-      msg: '城市发展规划模拟信息平台'
+      msg: '海绵城市雨洪管理系统'
     }
   }
 }

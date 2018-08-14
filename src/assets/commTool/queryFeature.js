@@ -3,7 +3,7 @@ import ol from 'openlayers'
 import createEcharts from './createEchart'
 import $ from 'jquery'
 
-var resultLayer, SMmap, themeSource
+var resultLayer, SMmap, themeSource, layername, themeLayer
 var url = 'http://121.248.96.215:8091/iserver/services/data-swmm/rest/data'
 
 function setMap (map) {
@@ -32,7 +32,7 @@ function sqlQuery (map) {
   var sqlParam = new SuperMap.GetFeaturesBySQLParameters({
     queryParameter: {
       name: 'watershed1@swmm',
-      attributeFilter: 'dj = 10'
+      attributeFilter: 'smid = 10'
     },
     datasetNames: ['swmm:watershed1']
   })
@@ -52,32 +52,64 @@ function sqlQuery (map) {
 /**
  * 查询
  */
-function sqlQuery1 () {
-  var url2 = 'http://121.248.96.215:8091/iserver/services/data-swmm/rest/data'
+function sqlQuery1 (name) {
   var getFeatureParam, getFeatureBySQLService, getFeatureBySQLParams
-
+  layername = name
   getFeatureParam = new SuperMap.FilterParameter({
-    name: 'watershed@swmm',
+    name: layername + '@swmm',
     attributeFilter: 'SMID > -1'
   })
   getFeatureBySQLParams = new SuperMap.GetFeaturesBySQLParameters({
     queryParameter: getFeatureParam,
     toIndex: 500,
-    datasetNames: ['swmm:watershed']
+    datasetNames: ['swmm:' + layername]
   })
 
-  getFeatureBySQLService = new SuperMap.GetFeaturesBySQLService(url2, {
+  getFeatureBySQLService = new SuperMap.GetFeaturesBySQLService(url, {
     format: SuperMap.DataFormat.ISERVER,
     eventListeners: {'processCompleted': processCompleted, 'processFailed': processFailed}
   })
   getFeatureBySQLService.processAsync(getFeatureBySQLParams)
 }
 
+/**
+ * 查询图层中所有的要素
+ * @param {*} name
+ */
+function queryLID (name) {
+  layername = name
+  var getFeatureParam, getFeatureBySQLService, getFeatureBySQLParams
+
+  getFeatureParam = new SuperMap.FilterParameter({
+    name: layername + '@swmm',
+    attributeFilter: 'SMID > -1'
+  })
+  getFeatureBySQLParams = new SuperMap.GetFeaturesBySQLParameters({
+    queryParameter: getFeatureParam,
+    toIndex: 500,
+    datasetNames: ['swmm:' + layername]
+  })
+
+  getFeatureBySQLService = new SuperMap.GetFeaturesBySQLService(url, {
+    format: SuperMap.DataFormat.ISERVER,
+    eventListeners: {'processCompleted': processCompleted, 'processFailed': processFailed}
+  })
+  getFeatureBySQLService.processAsync(getFeatureBySQLParams)
+}
+
+/**
+ * 查询成功后，需要进行的处理
+ * @param {*} getFeaturesEventArgs
+ */
 function processCompleted (getFeaturesEventArgs) {
   var result = getFeaturesEventArgs.result
   if (result && result.features) {
-    addThemeLayer()
-    themeSource.addFeatures(result.features)
+    if (layername === 'LID') {
+      console.log(result.features.length)
+    } else if (layername === 'watershed') {
+      addThemeLayer()
+      themeSource.addFeatures(result.features)
+    }
   }
 }
 
@@ -138,7 +170,7 @@ function addThemeLayer () {
           }
         }]
     })
-  var themeLayer = new ol.layer.Image({
+  themeLayer = new ol.layer.Image({
     source: themeSource
   })
   themeLayer.setOpacity(0.8)
@@ -169,8 +201,9 @@ function postajax (id) {
     data: {'id': id},
     dataType: 'json',
     success: function (result) {
-      var rainflow = result.msg
-      createEcharts.showRainflow(rainflow)
+      var rainflow = result.rainflow
+      var lidrainflow = result.lidrainflow
+      createEcharts.showRainflow(rainflow, lidrainflow)
     },
     error: function (msg) {
       console.log('failed')
@@ -204,10 +237,16 @@ function createInteraction (SMmap) {
   SMmap.addInteraction(pointerInteraction)
 }
 
+function removeWatershedLayer () {
+  SMmap.removeLayer(themeLayer)
+}
+
 export default {
   queryFeat,
   sqlQuery,
   sqlQuery1,
   setMap,
-  createInteraction
+  createInteraction,
+  queryLID,
+  removeWatershedLayer
 }

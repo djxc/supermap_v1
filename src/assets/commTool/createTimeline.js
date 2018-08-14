@@ -148,7 +148,7 @@ function createTime (map) {
         loop: false,
         axisType: 'category',
         show: true,
-        autoPlay: true,
+        autoPlay: false,
         playInterval: 2000,
         data: datass
       },
@@ -165,15 +165,12 @@ function createTime (map) {
     options: djs
   }
   myChart.setOption(option)
-
+  singleTheme.createTheme(map)
   myChart.on('timelinechanged', function (param) {
     var time = param.currentIndex
-    if (time > 1) {
-      singleTheme.removeTheme(map)
-    }
     postajax(time)
+    singleTheme.removeTheme(map)
     singleTheme.createTheme(map)
-    console.log(time)
   })
 }
 
@@ -183,7 +180,7 @@ function postajax (time) {
     type: 'POST',
     // contentType: 'application/json;charset=utf-8',
     data: {'time': time},
-    dataType: 'json',
+    dataType: 'text', // 'json',
     success: function (result) {
       console.log('ok')
     },

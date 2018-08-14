@@ -49,18 +49,8 @@
                         </a>
                     </li>
                     <li>
-                        <a href="javascript:;" id="getFeature">
-                            <span>获取地图要素</span>
-                        </a>
-                    </li>
-                    <li>
                         <a href="javascript:;" id="getGeojson">
                             <span>geojson数据</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:;" id="sqlQuery">
-                            <span>sqlQuery</span>
                         </a>
                     </li>
                     <li>
@@ -74,8 +64,41 @@
                         </a>
                     </li>
                 </ul>
+            </li>           
+            <!-- 图层控制 -->
+            <li class="nav-item">
+                <a href="javascript:;">
+                    <i class="my-icon nav-icon icon_3"></i>
+                    <span>图层控制</span>
+                    <i class="my-icon nav-more"></i>
+                </a>
+                <ul id="layerContr">
+                    <li>
+                        <a href="javascript:;" id="closeLayers">
+                            <span>关闭所有图层</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <span>
+                                <input type="checkbox" id="addHeatMap" /><span>热力图</span></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <span>
+                                <input type="checkbox" id="addLID" /><span>海绵体</span></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <span>
+                                <input type="checkbox" id="addWatershed" /><span>子流域</span></span>
+                        </a>
+                    </li>
+                </ul>
             </li>
-            <!-- 地理处理 -->
+             <!-- 地理处理 -->
             <li class="nav-item">
                 <a href="javascript:;">
                     <i class="my-icon nav-icon icon_3"></i>
@@ -91,21 +114,6 @@
                     <li>
                         <a href="javascript:;" id="Render">
                             <span>渲染</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <!-- 图层控制 -->
-            <li class="nav-item">
-                <a href="javascript:;">
-                    <i class="my-icon nav-icon icon_3"></i>
-                    <span>图层控制</span>
-                    <i class="my-icon nav-more"></i>
-                </a>
-                <ul id="layerContr">
-                    <li>
-                        <a href="javascript:;" id="closeLayers">
-                            <span>关闭所有图层</span>
                         </a>
                     </li>
                 </ul>
@@ -126,13 +134,6 @@
                 </ul>
                 <ul>
                     <li>
-                        <a href="javascript:;" id="timeline">
-                            <span>事件序列</span>
-                        </a>
-                    </li>
-                </ul>
-                <ul>
-                    <li>
                         <a href="javascript:;" id="showRainflow">
                             <span>经流量查询</span>
                         </a>
@@ -140,7 +141,7 @@
                 </ul>
                 <ul>
                     <li>
-                        <a href="javascript:;" id="">
+                        <a href="javascript:;" id="drawLID">
                             <span>海绵体布设</span>
                         </a>
                     </li>
@@ -157,10 +158,12 @@ import initMap from '../assets/commTool/intial'
 import $ from 'jquery'
 import addWFS from '../assets/commTool/addWFS'
 import createTheme from '../assets/commTool/singleTheme'
-import query from '../assets/commTool/queryFeature'
 import createTime from '../assets/commTool/createTimeline'
 import selectFeature from '../assets/commTool/selectFeature'
+import Heatmap from '../assets/commTool/createHeatmap'
+
 import '../assets/css/nav.css'
+import queryFeature from '../assets/commTool/queryFeature'
 
 export default {
   name: 'left',
@@ -195,19 +198,15 @@ $(function () {
   })
 
   $('#query').on('click', function () {
-    // query.queryFeat(initMap.getMap())
-    query.sqlQuery(initMap.getMap())
+    var queryDialog = $('#queryFeat')
+    control.ShowCloseDom(queryDialog, 'show')
   })
   $('#showRainflow').on('click', function () {
     var rainflowDialog = $('#rainflow')
-    query.createInteraction(initMap.getMap())
+    queryFeature.createInteraction(initMap.getMap())
     control.ShowCloseDom(rainflowDialog, 'show')
   })
-  $('#timeline').on('click', function () {
-    var timesliderDialog = $('#timeslider')
-    control.ShowCloseDom(timesliderDialog, 'show')
-    createTime.createTime(initMap.getMap())
-  })
+
   $('#createRain').on('click', function () {
     var rainDialog = $('#rainInput')
     control.ShowCloseDom(rainDialog, 'show')
@@ -227,6 +226,7 @@ $(function () {
     control.ShowCloseDom(drawDialog, 'show')
   })
 
+  // 加载网络地图
   $('#isAddWFS').change(function () {
     if ($('#isAddWFS').is(':checked')) {
       addWFS.addSM(initMap.getMap())
@@ -234,14 +234,43 @@ $(function () {
       addWFS.removeSMlayer(initMap.getMap())
     }
   })
+
+  // 加载热力图
+  $('#addHeatMap').change(function () {
+    if ($('#addHeatMap').is(':checked')) {
+      Heatmap.getFeatures(initMap.getMap())
+    } else if (!$('#addHeatMap').is(':checked')) {
+      Heatmap.removeHeatmap()
+    }
+  })
+
+  // 加载LID图层
+  $('#addLID').change(function () {
+    if ($('#addLID').is(':checked')) {
+      createTheme.createLIDTheme(initMap.getMap())
+    } else if (!$('#addLID').is(':checked')) {
+      createTheme.removeLIDlayer()
+    }
+  })
+
+  // 加载子流域图层addWatershed
+  $('#addWatershed').change(function () {
+    if ($('#addWatershed').is(':checked')) {
+      queryFeature.setMap(initMap.getMap())
+      queryFeature.sqlQuery1('watershed')
+    } else if (!$('#addLID').is(':checked')) {
+      queryFeature.removeWatershedLayer()
+    }
+  })
+
+  // 海绵体布设GreenManager
+  $('#drawLID').on('click', function () {
+    var GreenDialog = $('#GreenManager')
+    control.ShowCloseDom(GreenDialog, 'show')
+  })
+
   $('#getGeojson').on('click', function () {
     selectFeature.changeInteraction(initMap.getMap(), 'click')
-  })
-  $('#sqlQuery').on('click', function () {
-    query.setMap(initMap.getMap())
-    query.sqlQuery1()
-    // var drawDialog = $('#attrtable')
-    // control.ShowCloseDom(drawDialog, 'show')
   })
 
   var showImg = $('#isAddRS')
