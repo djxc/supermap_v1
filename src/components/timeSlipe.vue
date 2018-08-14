@@ -18,7 +18,7 @@ import createTime from '../assets/commTool/createTimeline'
 import singleTheme from '../assets/commTool/singleTheme'
 import initMap from '../assets/commTool/intial'
 
-var myChart
+var myChart, time, cxq, yfxs
 export default {
   name: 'timeslider',
   data () {
@@ -32,7 +32,10 @@ export default {
       control.ShowCloseDom(Dialog, 'close')
       singleTheme.removeTheme(initMap.getMap())
     },
-    showLoad: function () {
+    getRainValue: function () {
+      time = $('#rainTime').val()
+      cxq = $('#period').val()
+      yfxs = $('#coeffici').val()
       myChart = echarts.init(document.getElementById('timelineecharts'))
       myChart.showLoading({
         text: '等待一下～～',
@@ -41,11 +44,18 @@ export default {
           fontSize: 20
         }
       })
-      this.postajax(60, 1, 0.5)
     },
-    postajax: function (time, cxq, yfxs) {
+    showLoad: function () {
+      this.getRainValue()
+      this.postajax('calculateRainflow')
+    },
+    showLIDLoad: function () {
+      this.getRainValue()
+      this.postajax('calculateLIDRainflow')
+    },
+    postajax: function (ufun) {
       $.ajax({
-        url: 'http://localhost:8088/calculateRainflow',
+        url: 'http://localhost:8088/' + ufun,
         type: 'POST',
         // contentType: 'application/json;charset=utf-8',
         data: {'time': time, 'cxq': cxq, 'yfxs': yfxs},

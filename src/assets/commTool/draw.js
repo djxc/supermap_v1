@@ -1,6 +1,5 @@
 import ol from 'openlayers'
 import $ from 'jquery'
-import {SuperMap} from '@supermap/iclient-openlayers'
 
 var draw, SMmap, source, vector, style
 
@@ -179,90 +178,90 @@ function createDraws (type) {
 function createStyle (type) {
   switch (type) {
     case 1:
-    style = new ol.style.Style({
-      fill:new ol.style.Fill({
-        color: 'rgba(248, 203, 249, 1)'
-      }),
-      stroke: new ol.style.Stroke({
-        color: 'rgb(255, 255, 255)',
-        width: 0.1
-      }),
-      image: new ol.style.Circle({
-        radius: 7,
+      style = new ol.style.Style({
         fill: new ol.style.Fill({
-          color: '#ffcc33'
+          color: 'rgba(248, 203, 249, 1)'
+        }),
+        stroke: new ol.style.Stroke({
+          color: 'rgb(255, 255, 255)',
+          width: 0.1
+        }),
+        image: new ol.style.Circle({
+          radius: 7,
+          fill: new ol.style.Fill({
+            color: '#ffcc33'
+          })
         })
       })
-    })
-    break
-  case 2:
-    style = new ol.style.Style({
-      fill:new ol.style.Fill({
-        color: 'rgba(196, 255, 189, 1)'
-      }),
-      stroke: new ol.style.Stroke({
-        color: 'rgb(255, 255, 255)',
-        width: 0.1
-      }),
-      image: new ol.style.Circle({
-        radius: 7,
+      break
+    case 2:
+      style = new ol.style.Style({
         fill: new ol.style.Fill({
-          color: '#ffcc33'
+          color: 'rgba(196, 255, 189, 1)'
+        }),
+        stroke: new ol.style.Stroke({
+          color: 'rgb(255, 255, 255)',
+          width: 0.1
+        }),
+        image: new ol.style.Circle({
+          radius: 7,
+          fill: new ol.style.Fill({
+            color: '#ffcc33'
+          })
         })
       })
-    })
-    break
-  case 3:
-    style = new ol.style.Style({
-      fill:new ol.style.Fill({
-        color: 'rgba(255, 173, 173, 1)'
-      }),
-      stroke: new ol.style.Stroke({
-        color: 'rgb(255, 255, 255)',
-        width: 0.1
-      }),
-      image: new ol.style.Circle({
-        radius: 7,
+      break
+    case 3:
+      style = new ol.style.Style({
         fill: new ol.style.Fill({
-          color: '#ffcc33'
+          color: 'rgba(255, 173, 173, 1)'
+        }),
+        stroke: new ol.style.Stroke({
+          color: 'rgb(255, 255, 255)',
+          width: 0.1
+        }),
+        image: new ol.style.Circle({
+          radius: 7,
+          fill: new ol.style.Fill({
+            color: '#ffcc33'
+          })
         })
       })
-    })
-    break
-  case 4:
-    style = new ol.style.Style({
-      fill:new ol.style.Fill({
-        color: 'rgba(255, 239, 168, 1)'
-      }),
-      stroke: new ol.style.Stroke({
-        color: 'rgb(255, 255, 255)',
-        width: 0.1
-      }),
-      image: new ol.style.Circle({
-        radius: 7,
+      break
+    case 4:
+      style = new ol.style.Style({
         fill: new ol.style.Fill({
-          color: '#ffcc33'
+          color: 'rgba(255, 239, 168, 1)'
+        }),
+        stroke: new ol.style.Stroke({
+          color: 'rgb(255, 255, 255)',
+          width: 0.1
+        }),
+        image: new ol.style.Circle({
+          radius: 7,
+          fill: new ol.style.Fill({
+            color: '#ffcc33'
+          })
         })
       })
-    })
-    break
-  case 5:
-    style = new ol.style.Style({
-      fill:new ol.style.Fill({
-        color: 'rgba(173, 209, 255, 1)'
-      }),
-      stroke: new ol.style.Stroke({
-        color: 'rgb(255, 255, 255)',
-        width: 0.1
-      }),
-      image: new ol.style.Circle({
-        radius: 7,
+      break
+    case 5:
+      style = new ol.style.Style({
         fill: new ol.style.Fill({
-          color: '#ffcc33'
+          color: 'rgba(173, 209, 255, 1)'
+        }),
+        stroke: new ol.style.Stroke({
+          color: 'rgb(255, 255, 255)',
+          width: 0.1
+        }),
+        image: new ol.style.Circle({
+          radius: 7,
+          fill: new ol.style.Fill({
+            color: '#ffcc33'
+          })
         })
       })
-    })    
-    break
+      break
   }
 }
 
@@ -322,14 +321,14 @@ function drawGreen (map) {
 }
 
 function DrawEnd (type, id) {
-  draw.on('drawend',function(evt){
-    var fea = evt.feature;
-    fea.set('name',type);
+  draw.on('drawend', function (evt) {
+    var fea = evt.feature
+    fea.set('name', type)
     createStyle(id)
-    if(style!=null){// 如果传入不为空，则使用自定义样式
-        fea.setStyle([style]);
+    if (style != null) { // 如果传入不为空，则使用自定义样式
+      fea.setStyle([style])
     }
-  },this)
+  }, this)
   SMmap.addInteraction(draw)
 }
 

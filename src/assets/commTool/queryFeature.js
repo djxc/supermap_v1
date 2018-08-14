@@ -4,7 +4,7 @@ import createEcharts from './createEchart'
 import $ from 'jquery'
 
 var resultLayer, SMmap, themeSource, layername, themeLayer
-var url = 'http://121.248.96.215:8091/iserver/services/data-swmm/rest/data'
+var url = 'http://116.196.88.174:8090/iserver/services/data-swmm/rest/data'
 
 function setMap (map) {
   SMmap = map

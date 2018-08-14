@@ -128,7 +128,7 @@
                 <ul>
                     <li>
                         <a href="javascript:;" id="createRain">
-                            <span>雨型模拟器</span>
+                            <span>降雨模拟器</span>
                         </a>
                     </li>
                 </ul>

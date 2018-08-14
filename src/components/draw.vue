@@ -41,8 +41,8 @@ $(function () {
   var vector = new ol.layer.Vector({
     source: source
   })
-  vector.setZIndex(4)
-  map.addLayer(vector)
+  // vector.setZIndex(4)
+  // map.addLayer(vector)
 
   $('#drawClose').on('click', function () {
     var drawDialog = $('#draw')

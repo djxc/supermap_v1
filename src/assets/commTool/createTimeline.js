@@ -111,7 +111,7 @@ function createTime (map) {
   var rainTimeSeries = RainLine.createRainLine()
   var datas = []
   var datass = []
-  for (var i = 0; i < rainTimeSeries.length; i++) {
+  for (var i = 0; i < rainTimeSeries.length - 1; i++) {
     datas.push(i)
     if (i % 2 === 0) {
       datass.push(i)
@@ -119,7 +119,7 @@ function createTime (map) {
   }
   var djs = []
 
-  for (var j = 10; j < rainTimeSeries.length; j++) {
+  for (var j = 10; j < rainTimeSeries.length - 1; j++) {
     var djdata = []
     var djrain = []
     for (var x = j - 10; x < j + 10; x++) {
@@ -175,6 +175,23 @@ function createTime (map) {
 }
 
 function postajax (time) {
+  $.ajax({
+    url: 'http://localhost:8088/changerainflow',
+    type: 'POST',
+    // contentType: 'application/json;charset=utf-8',
+    data: {'time': time},
+    dataType: 'text', // 'json',
+    success: function (result) {
+      console.log('ok')
+    },
+    error: function (msg) {
+      console.log('failed')
+      console.log(msg)
+    }
+  })
+}
+
+function postajaxLID (time) {
   $.ajax({
     url: 'http://localhost:8088/changerainflow',
     type: 'POST',

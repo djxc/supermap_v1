@@ -24,7 +24,7 @@ function createHeatmap () {
 
 function getFeatures (map) {
   SMmap = map
-  var url2 = 'http://121.248.96.215:8091/iserver/services/data-swmm/rest/data'
+  var url2 = 'http://116.196.88.174:8090/iserver/services/data-swmm/rest/data'
   var getFeatureParam, getFeatureBySQLService, getFeatureBySQLParams
 
   getFeatureParam = new SuperMap.FilterParameter({

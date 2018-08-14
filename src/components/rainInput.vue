@@ -13,7 +13,8 @@
           <li><label>雨峰系数：</label><input id="coeffici" v-model="coeffici"/></li>
       </ul><br>
       <button v-on:click='showRainInput' class="btn btn-primary btn-sm">生成降雨折线</button><br><br>
-      <button v-on:click='startRain' class="btn btn-success btn-sm">开始降雨</button>
+      <button v-on:click='startRain' class="btn btn-success btn-sm">开始降雨</button><br><br>
+      <button v-on:click='startRain' class="btn btn-success btn-sm" disabled="disabled" id="LIDRain">海绵系统下降雨</button>
     </div>
   </div>
 </template>
@@ -51,8 +52,17 @@ export default {
       control.ShowCloseDom(timeDialog, 'show')
       timeline.methods.showLoad()
     },
+    startLIDRain: function () {
+      this.closeDialog()
+      var timeDialog = $('#timeslider')
+      control.ShowCloseDom(timeDialog, 'show')
+      timeline.methods.showLoad()
+    },
     getTime: function () {
       return this.rainTime
+    },
+    showLID: function () {
+      $('#LIDRain').attr('disabled', false)
     }
   }
 }

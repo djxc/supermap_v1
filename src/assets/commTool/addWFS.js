@@ -50,7 +50,7 @@ var SMlayer, SMsource
 // }
 
 function addSM (map) {
-  var url = 'http://121.248.96.215:8091/iserver/services/map-swmm/rest/maps/watershed1@swmm'
+  var url = 'http://116.196.88.174:8090/iserver/services/map-swmm/rest/maps/watershed1@swmm'
   SMsource = new ol.source.TileSuperMapRest({
     url: url,
     wrapX: true
