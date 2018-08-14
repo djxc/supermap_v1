@@ -21,11 +21,8 @@
 import control from '../assets/commTool/controlDom'
 import $ from 'jquery'
 import showRain from './Rain.vue'
-import createTime from '../assets/commTool/createTimeline'
-import initMap from '../assets/commTool/intial'
-import echarts from 'echarts'
 import timeline from './timeSlipe'
-var myChart
+
 export default {
   name: 'rainInput',
   data () {
@@ -56,7 +53,7 @@ export default {
     },
     getTime: function () {
       return this.rainTime
-    }    
+    }
   }
 }
 </script>

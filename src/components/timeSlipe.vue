@@ -48,7 +48,7 @@ export default {
         url: 'http://localhost:8088/calculateRainflow',
         type: 'POST',
         // contentType: 'application/json;charset=utf-8',
-        data: {'time': time, 'cxq': cxq,'yfxs': yfxs},
+        data: {'time': time, 'cxq': cxq, 'yfxs': yfxs},
         dataType: 'text', // 'json',
         success: function (result) {
           console.log('ok')
@@ -57,7 +57,7 @@ export default {
         },
         error: function (msg) {
           console.log('failed')
-          console.log(msg)        
+          console.log(msg)
         }
       })
     }

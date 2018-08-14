@@ -64,7 +64,7 @@
                         </a>
                     </li>
                 </ul>
-            </li>           
+            </li>
             <!-- 图层控制 -->
             <li class="nav-item">
                 <a href="javascript:;">
@@ -158,7 +158,6 @@ import initMap from '../assets/commTool/intial'
 import $ from 'jquery'
 import addWFS from '../assets/commTool/addWFS'
 import createTheme from '../assets/commTool/singleTheme'
-import createTime from '../assets/commTool/createTimeline'
 import selectFeature from '../assets/commTool/selectFeature'
 import Heatmap from '../assets/commTool/createHeatmap'
 

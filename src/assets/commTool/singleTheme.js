@@ -9,10 +9,14 @@ var themeRangeItem1, themeRangeItem2,
   themeRange, themeLayer
 var themeUniqueItemes, LIDthemelayer,
   style1
+
+/**
+ * 经流量变化的样式，不同范围的经流量设置不同的样式
+ */
 function createRangeItems () {
   themeRangeItem1 = new SuperMap.ThemeRangeItem({
     start: 0,
-    end: 0.05,
+    end: 0.5,
     style: new SuperMap.ServerStyle({
       fillForeColor: new SuperMap.ServerColor(230, 255, 250),
       lineColor: new SuperMap.ServerColor(179, 209, 193),
@@ -21,8 +25,8 @@ function createRangeItems () {
   })
 
   themeRangeItem2 = new SuperMap.ThemeRangeItem({
-    start: 0.05,
-    end: 0.1,
+    start: 0.5,
+    end: 1,
     style: new SuperMap.ServerStyle({
       fillForeColor: new SuperMap.ServerColor(210, 220, 230),
       lineColor: new SuperMap.ServerColor(179, 209, 193),
@@ -31,8 +35,8 @@ function createRangeItems () {
   })
 
   themeRangeItem3 = new SuperMap.ThemeRangeItem({
-    start: 0.1,
-    end: 0.3,
+    start: 1,
+    end: 3,
     style: new SuperMap.ServerStyle({
       fillForeColor: new SuperMap.ServerColor(180, 200, 220),
       lineColor: new SuperMap.ServerColor(179, 209, 193),
@@ -41,8 +45,8 @@ function createRangeItems () {
   })
 
   themeRangeItem4 = new SuperMap.ThemeRangeItem({
-    start: 0.3,
-    end: 0.5,
+    start: 3,
+    end: 5,
     style: new SuperMap.ServerStyle({
       fillForeColor: new SuperMap.ServerColor(160, 180, 210),
       lineColor: new SuperMap.ServerColor(179, 209, 193),
@@ -51,8 +55,8 @@ function createRangeItems () {
   })
 
   themeRangeItem5 = new SuperMap.ThemeRangeItem({
-    start: 0.5,
-    end: 0.7,
+    start: 5,
+    end: 7,
     style: new SuperMap.ServerStyle({
       fillForeColor: new SuperMap.ServerColor(140, 160, 200),
       lineColor: new SuperMap.ServerColor(179, 209, 193),
@@ -61,8 +65,8 @@ function createRangeItems () {
   })
 
   themeRangeItem6 = new SuperMap.ThemeRangeItem({
-    start: 0.7,
-    end: 0.9,
+    start: 7,
+    end: 9,
     style: new SuperMap.ServerStyle({
       fillForeColor: new SuperMap.ServerColor(120, 140, 190),
       lineColor: new SuperMap.ServerColor(179, 209, 193),
@@ -71,8 +75,8 @@ function createRangeItems () {
   })
 
   themeRangeItem7 = new SuperMap.ThemeRangeItem({
-    start: 0.9,
-    end: 1.2,
+    start: 9,
+    end: 12,
     style: new SuperMap.ServerStyle({
       fillForeColor: new SuperMap.ServerColor(100, 120, 180),
       lineColor: new SuperMap.ServerColor(179, 209, 193),
@@ -81,8 +85,8 @@ function createRangeItems () {
   })
 
   themeRangeItem8 = new SuperMap.ThemeRangeItem({
-    start: 1.2,
-    end: 1.5,
+    start: 12,
+    end: 15,
     style: new SuperMap.ServerStyle({
       fillForeColor: new SuperMap.ServerColor(80, 100, 170),
       lineColor: new SuperMap.ServerColor(179, 209, 193),
@@ -91,8 +95,8 @@ function createRangeItems () {
   })
 
   themeRangeItem9 = new SuperMap.ThemeRangeItem({
-    start: 1.5,
-    end: 1.8,
+    start: 15,
+    end: 18,
     style: new SuperMap.ServerStyle({
       fillForeColor: new SuperMap.ServerColor(60, 90, 160),
       lineColor: new SuperMap.ServerColor(179, 209, 193),
@@ -101,8 +105,8 @@ function createRangeItems () {
   })
 
   themeRangeItem10 = new SuperMap.ThemeRangeItem({
-    start: 1.8,
-    end: 3,
+    start: 18,
+    end: 30,
     style: new SuperMap.ServerStyle({
       fillForeColor: new SuperMap.ServerColor(30, 80, 150),
       lineColor: new SuperMap.ServerColor(179, 209, 193),
