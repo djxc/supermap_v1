@@ -107,27 +107,35 @@ function createTime1 () {
   myChart.setOption(option)
 }
 
-function createTime (map) {
+function createTime (map, type) {
   var rainTimeSeries = RainLine.createRainLine()
   var datas = []
   var datass = []
   for (var i = 0; i < rainTimeSeries.length - 1; i++) {
     datas.push(i)
-    if (i % 2 === 0) {
-      datass.push(i)
-    }
+    datass.push(i)
+    // if (i % 2 === 0) {
+    //   datass.push(i)
+    // }
   }
   var djs = []
 
   for (var j = 10; j < rainTimeSeries.length - 1; j++) {
     var djdata = []
     var djrain = []
-    for (var x = j - 10; x < j + 10; x++) {
-      if (rainTimeSeries[x] != null) {
-        if (j % 2 === 0) {
-        }
+    if (j < 10) {
+      for (var x = 0; x < j; x++) {
         djdata.push(datas[x])
         djrain.push(rainTimeSeries[x])
+      }
+    } else {
+      for (var x1 = j - 10; x1 < j + 10; x1++) {
+        if (rainTimeSeries[x1] != null) {
+          if (x1 % 2 === 0) {
+          }
+          djdata.push(datas[x1])
+          djrain.push(rainTimeSeries[x1])
+        }
       }
     }
     var dj = {
@@ -168,7 +176,11 @@ function createTime (map) {
   singleTheme.createTheme(map)
   myChart.on('timelinechanged', function (param) {
     var time = param.currentIndex
-    postajax(time)
+    if (type === 1) {
+      postajax(time)
+    } else {
+      postajaxlid(time)
+    }
     singleTheme.removeTheme(map)
     singleTheme.createTheme(map)
   })
@@ -176,7 +188,7 @@ function createTime (map) {
 
 function postajax (time) {
   $.ajax({
-    url: 'http://localhost:8088/changerainflow',
+    url: 'http://121.248.96.215:8088/changerainflow',
     type: 'POST',
     // contentType: 'application/json;charset=utf-8',
     data: {'time': time},
@@ -191,9 +203,9 @@ function postajax (time) {
   })
 }
 
-function postajaxLID (time) {
+function postajaxlid (time) {
   $.ajax({
-    url: 'http://localhost:8088/changerainflow',
+    url: 'http://121.248.96.215:8088/changerLIDrainflow',
     type: 'POST',
     // contentType: 'application/json;charset=utf-8',
     data: {'time': time},

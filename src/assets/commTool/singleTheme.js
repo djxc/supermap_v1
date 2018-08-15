@@ -5,7 +5,7 @@ var SMmap
 var themeRangeItem1, themeRangeItem2,
   themeRangeItem3, themeRangeItem4, themeRangeItem5,
   themeRangeItem6, themeRangeItem7, themeRangeItem8,
-  themeRangeItem9, themeRangeItem10,
+  themeRangeItem9, themeRangeItem10,themeRangeItem11,
   themeRange, themeLayer
 var themeUniqueItemes, LIDthemelayer,
   style1
@@ -16,7 +16,7 @@ var themeUniqueItemes, LIDthemelayer,
 function createRangeItems () {
   themeRangeItem1 = new SuperMap.ThemeRangeItem({
     start: 0,
-    end: 0.5,
+    end: 0.3,
     style: new SuperMap.ServerStyle({
       fillForeColor: new SuperMap.ServerColor(230, 255, 250),
       lineColor: new SuperMap.ServerColor(179, 209, 193),
@@ -25,6 +25,16 @@ function createRangeItems () {
   })
 
   themeRangeItem2 = new SuperMap.ThemeRangeItem({
+    start: 0.3,
+    end: 0.5,
+    style: new SuperMap.ServerStyle({
+      fillForeColor: new SuperMap.ServerColor(210, 255, 250),
+      lineColor: new SuperMap.ServerColor(179, 209, 193),
+      lineWidth: 0.1
+    })
+  })
+
+  themeRangeItem3 = new SuperMap.ThemeRangeItem({
     start: 0.5,
     end: 1,
     style: new SuperMap.ServerStyle({
@@ -34,7 +44,7 @@ function createRangeItems () {
     })
   })
 
-  themeRangeItem3 = new SuperMap.ThemeRangeItem({
+  themeRangeItem4 = new SuperMap.ThemeRangeItem({
     start: 1,
     end: 3,
     style: new SuperMap.ServerStyle({
@@ -44,7 +54,7 @@ function createRangeItems () {
     })
   })
 
-  themeRangeItem4 = new SuperMap.ThemeRangeItem({
+  themeRangeItem5 = new SuperMap.ThemeRangeItem({
     start: 3,
     end: 5,
     style: new SuperMap.ServerStyle({
@@ -54,7 +64,7 @@ function createRangeItems () {
     })
   })
 
-  themeRangeItem5 = new SuperMap.ThemeRangeItem({
+  themeRangeItem6 = new SuperMap.ThemeRangeItem({
     start: 5,
     end: 7,
     style: new SuperMap.ServerStyle({
@@ -64,7 +74,7 @@ function createRangeItems () {
     })
   })
 
-  themeRangeItem6 = new SuperMap.ThemeRangeItem({
+  themeRangeItem7 = new SuperMap.ThemeRangeItem({
     start: 7,
     end: 9,
     style: new SuperMap.ServerStyle({
@@ -74,7 +84,7 @@ function createRangeItems () {
     })
   })
 
-  themeRangeItem7 = new SuperMap.ThemeRangeItem({
+  themeRangeItem8 = new SuperMap.ThemeRangeItem({
     start: 9,
     end: 12,
     style: new SuperMap.ServerStyle({
@@ -84,7 +94,7 @@ function createRangeItems () {
     })
   })
 
-  themeRangeItem8 = new SuperMap.ThemeRangeItem({
+  themeRangeItem9 = new SuperMap.ThemeRangeItem({
     start: 12,
     end: 15,
     style: new SuperMap.ServerStyle({
@@ -94,7 +104,7 @@ function createRangeItems () {
     })
   })
 
-  themeRangeItem9 = new SuperMap.ThemeRangeItem({
+  themeRangeItem10 = new SuperMap.ThemeRangeItem({
     start: 15,
     end: 18,
     style: new SuperMap.ServerStyle({
@@ -104,7 +114,7 @@ function createRangeItems () {
     })
   })
 
-  themeRangeItem10 = new SuperMap.ThemeRangeItem({
+  themeRangeItem11 = new SuperMap.ThemeRangeItem({
     start: 18,
     end: 30,
     style: new SuperMap.ServerStyle({
@@ -126,7 +136,7 @@ function createTheme (map) {
     rangeExpression: 'rainflow',
     rangeMode: SuperMap.RangeMode.EQUALINTERVAL,
     items: [themeRangeItem1, themeRangeItem2, themeRangeItem3, themeRangeItem4, themeRangeItem5,
-      themeRangeItem6, themeRangeItem7, themeRangeItem8, themeRangeItem9, themeRangeItem10]
+      themeRangeItem6, themeRangeItem7, themeRangeItem8, themeRangeItem9, themeRangeItem10,themeRangeItem11]
   })
   var themeParameters = new SuperMap.ThemeParameters({
     datasetNames: ['watershed1'],
@@ -134,7 +144,8 @@ function createTheme (map) {
     joinItems: null,
     themes: [themeRange]
   })
-  var url = 'http://116.196.88.174:8090/iserver/services/map-swmm/rest/maps/watershed1@swmm'
+  // var url = 'http://116.196.88.174:8090/iserver/services/map-swmm/rest/maps/watershed1@swmm'
+  var url = 'http://121.248.96.215:8091/iserver/services/map-swmm/rest/maps/watershed1@swmm'
   new ol.supermap.ThemeService(url).getThemeInfo(themeParameters, function (serviceResult) {
     var result = serviceResult.result
     if (result && result.newResourceID) {
@@ -157,7 +168,7 @@ function createTheme (map) {
  * 创建唯一值样式
  */
 function createthemeUniqueIteme () {
-  var style2, style3, style4, style5, style6
+  var style2, style3, style4, style5
   style1 = new SuperMap.ServerStyle({
     fillForeColor: new SuperMap.ServerColor(248, 203, 249),
     lineColor: new SuperMap.ServerColor(255, 255, 255),
@@ -183,32 +194,32 @@ function createthemeUniqueIteme () {
     lineColor: new SuperMap.ServerColor(255, 255, 255),
     lineWidth: 0.1
   })
-  style6 = new SuperMap.ServerStyle({
-    fillForeColor: new SuperMap.ServerColor(132, 164, 232),
-    lineColor: new SuperMap.ServerColor(255, 255, 255),
-    lineWidth: 0.1
-  })
+  // style6 = new SuperMap.ServerStyle({
+  //   fillForeColor: new SuperMap.ServerColor(132, 164, 232),
+  //   lineColor: new SuperMap.ServerColor(255, 255, 255),
+  //   lineWidth: 0.1
+  // })
 
   var themeUniqueIteme1 = new SuperMap.ThemeUniqueItem({
-      unique: '1',
-      style: style1
-    }),
-    themeUniqueIteme2 = new SuperMap.ThemeUniqueItem({
-      unique: '2',
-      style: style2
-    }),
-    themeUniqueIteme3 = new SuperMap.ThemeUniqueItem({
-      unique: '3',
-      style: style3
-    }),
-    themeUniqueIteme4 = new SuperMap.ThemeUniqueItem({
-      unique: '4',
-      style: style4
-    }),
-    themeUniqueIteme5 = new SuperMap.ThemeUniqueItem({
-      unique: '5',
-      style: style5
-    })
+    unique: '1',
+    style: style1
+  })
+  var themeUniqueIteme2 = new SuperMap.ThemeUniqueItem({
+    unique: '2',
+    style: style2
+  })
+  var themeUniqueIteme3 = new SuperMap.ThemeUniqueItem({
+    unique: '3',
+    style: style3
+  })
+  var themeUniqueIteme4 = new SuperMap.ThemeUniqueItem({
+    unique: '4',
+    style: style4
+  })
+  var themeUniqueIteme5 = new SuperMap.ThemeUniqueItem({
+    unique: '5',
+    style: style5
+  })
 
   themeUniqueItemes = [
     themeUniqueIteme1, themeUniqueIteme2, themeUniqueIteme3, themeUniqueIteme4, themeUniqueIteme5

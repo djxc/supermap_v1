@@ -30,7 +30,7 @@
                     <li>
                         <a href="javascript:;" id="addWFS">
                             <span>
-                                <input type="checkbox" id="isAddWFS" /><span>WFS</span></span>
+                                <input type="checkbox" id="isAddWFS" /><span>研究区</span></span>
                         </a>
                     </li>
                 </ul>
@@ -45,7 +45,7 @@
                 <ul>
                     <li>
                         <a href="javascript:;">
-                            <span id="myDraw">开始编辑</span>
+                            <span id="myDraw">编辑</span>
                         </a>
                     </li>
                     <li>
@@ -96,6 +96,12 @@
                                 <input type="checkbox" id="addWatershed" /><span>子流域</span></span>
                         </a>
                     </li>
+                    <li>
+                        <a href="javascript:;">
+                            <span>
+                                <input type="checkbox" id="addLegend" /><span>图例</span></span>
+                        </a>
+                    </li>
                 </ul>
             </li>
              <!-- 地理处理 -->
@@ -114,6 +120,16 @@
                     <li>
                         <a href="javascript:;" id="Render">
                             <span>渲染</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;" id="overlayer">
+                            <span>叠加分析</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;" id="buffer">
+                            <span>缓冲区分析</span>
                         </a>
                     </li>
                 </ul>
@@ -163,6 +179,8 @@ import Heatmap from '../assets/commTool/createHeatmap'
 
 import '../assets/css/nav.css'
 import queryFeature from '../assets/commTool/queryFeature'
+import Legend from '../assets/commTool/createLegend'
+import draw from './draw'
 
 export default {
   name: 'left',
@@ -196,6 +214,12 @@ $(function () {
     }
   })
 
+  $('#overlayer').on('click', function () {
+    alert('此功能还没实现')
+  })
+  $('#buffer').on('click', function () {
+    alert('此功能还没实现')
+  })
   $('#query').on('click', function () {
     var queryDialog = $('#queryFeat')
     control.ShowCloseDom(queryDialog, 'show')
@@ -223,6 +247,7 @@ $(function () {
   $('#myDraw').on('click', function () {
     var drawDialog = $('#draw')
     control.ShowCloseDom(drawDialog, 'show')
+    draw.methods.startDraw()
   })
 
   // 加载网络地图
@@ -257,7 +282,7 @@ $(function () {
     if ($('#addWatershed').is(':checked')) {
       queryFeature.setMap(initMap.getMap())
       queryFeature.sqlQuery1('watershed')
-    } else if (!$('#addLID').is(':checked')) {
+    } else if (!$('#addWatershed').is(':checked')) {
       queryFeature.removeWatershedLayer()
     }
   })
@@ -266,6 +291,15 @@ $(function () {
   $('#drawLID').on('click', function () {
     var GreenDialog = $('#GreenManager')
     control.ShowCloseDom(GreenDialog, 'show')
+  })
+
+  // 加载图例
+  $('#addLegend').change(function () {
+    if ($('#addLegend').is(':checked')) {
+      Legend.getMapPoint(initMap.getMap())
+    } else if (!$('#addLegend').is(':checked')) {
+      Legend.removeLegend()
+    }
   })
 
   $('#getGeojson').on('click', function () {

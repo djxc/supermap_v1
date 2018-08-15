@@ -14,7 +14,7 @@
       </ul><br>
       <button v-on:click='showRainInput' class="btn btn-primary btn-sm">生成降雨折线</button><br><br>
       <button v-on:click='startRain' class="btn btn-success btn-sm">开始降雨</button><br><br>
-      <button v-on:click='startRain' class="btn btn-success btn-sm" disabled="disabled" id="LIDRain">海绵系统下降雨</button>
+      <button v-on:click='startLIDRain' class="btn btn-success btn-sm" id="LIDRain">海绵系统下降雨</button>
     </div>
   </div>
 </template>
@@ -38,6 +38,7 @@ export default {
     closeDialog: function () {
       var Dialog = $('#rainInput')
       control.ShowCloseDom(Dialog, 'close')
+      $('#LIDRain').css({ 'display': 'none' })
     },
     showRainInput: function () {
       if (!$('#rain').is(':visible')) {
@@ -56,13 +57,13 @@ export default {
       this.closeDialog()
       var timeDialog = $('#timeslider')
       control.ShowCloseDom(timeDialog, 'show')
-      timeline.methods.showLoad()
+      timeline.methods.showLIDLoad()
     },
     getTime: function () {
       return this.rainTime
     },
     showLID: function () {
-      $('#LIDRain').attr('disabled', false)
+      $('#LIDRain').css({ 'display': 'inline' })
     }
   }
 }
@@ -80,5 +81,8 @@ export default {
 }
 #rainTime, #period, #coeffici {
   width: 50px;
+}
+#LIDRain{
+  display: none;
 }
 </style>

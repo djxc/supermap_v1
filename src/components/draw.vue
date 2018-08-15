@@ -24,7 +24,8 @@
 
 import controlLayer from '../assets/commTool/controlDom'
 import initMap from '../assets/commTool/intial'
-import ol from 'openlayers'
+// import ol from 'openlayers'
+import mydraw from '../assets/commTool/draw'
 import $ from 'jquery'
 export default {
   name: 'myDialog',
@@ -32,55 +33,18 @@ export default {
     return {
       dname: '编辑'
     }
+  },
+  methods: {
+    startDraw: function () {
+      mydraw.DrawFeature(initMap.getMap())
+    }
   }
 }
 $(function () {
-  var draw
-  var map = initMap.getMap()
-  var source = new ol.source.Vector({wrapX: false})
-  var vector = new ol.layer.Vector({
-    source: source
-  })
-  // vector.setZIndex(4)
-  // map.addLayer(vector)
-
   $('#drawClose').on('click', function () {
     var drawDialog = $('#draw')
     controlLayer.ShowCloseDom(drawDialog, 'close')
   })
-
-  var buttons = $('.btn-group').children()
-  buttons.map(function (key) {
-    var value = buttons[key].value
-    if (value === 'None') {
-      $(buttons[key]).on('click', function () {
-        clearInteraction()
-      })
-      return
-    }
-    if (value === 'Clear') {
-      $(buttons[key]).on('click', function () {
-        clearInteraction()
-        source.clear()
-      })
-      return
-    }
-    $(buttons[key]).on('click', function () {
-      clearInteraction()
-      draw = new ol.interaction.Draw({
-        source: source,
-        type: buttons[key].value,
-        snapTolerance: 20
-      })
-      map.addInteraction(draw)
-    })
-  })
-
-  function clearInteraction () {
-    if (draw) {
-      map.removeInteraction(draw)
-    }
-  }
 })
 
 </script>

@@ -18,7 +18,7 @@
         <button class="btn btn-success btn-sm" v-on:click="startDraw">开始编辑</button>
         <button class="btn btn-primary btn-sm" v-on:click="stopDraw" disabled="disabled" id="stopBtn">停止编辑</button><br><br>
         <button class="btn btn-info btn-sm" v-on:click="clearDraw">清除</button><br><br>
-        <button class="btn btn-success btn-sm" v-on:click="startRainLID" disabled="disabled" id="startRainLid">模拟降雨</button>
+        <button class="btn btn-success btn-sm" v-on:click="startRainLID" id="startRainLid">模拟降雨</button>
       </div>
     </div>
   </div>

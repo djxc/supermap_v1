@@ -276,6 +276,49 @@ function initDraw () {
   vector.setZIndex(4)
 }
 
+function DrawFeature (map) {
+  var draw 
+  var source = new ol.source.Vector({wrapX: false})
+  var vectorlayer = new ol.layer.Vector({
+    source: source
+  })
+  vectorlayer.setZIndex(4)
+  map.addLayer(vectorlayer)
+
+  var buttons = $('.btn-group').children()
+  buttons.map(function (key) {
+    var value = buttons[key].value
+    if (value === 'None') {
+      $(buttons[key]).on('click', function () {
+        clearInteraction()
+      })
+      return
+    }
+    if (value === 'Clear') {
+      $(buttons[key]).on('click', function () {
+        clearInteraction()
+        source.clear()
+      })
+      return
+    }
+    $(buttons[key]).on('click', function () {
+      clearInteraction()
+      draw = new ol.interaction.Draw({
+        source: source,
+        type: buttons[key].value,
+        snapTolerance: 20
+      })
+      map.addInteraction(draw)
+    })
+  })
+
+  function clearInteraction () {
+    if (draw) {
+      map.removeInteraction(draw)
+    }
+  }
+}
+
 function drawGreen (map) {
   SMmap = map
   initDraw()
@@ -347,5 +390,6 @@ export default {
   drawGreen,
   stopDraw,
   clearDraw,
-  createDraws
+  createDraws,
+  DrawFeature
 }

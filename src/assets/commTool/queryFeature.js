@@ -4,8 +4,8 @@ import createEcharts from './createEchart'
 import $ from 'jquery'
 
 var resultLayer, SMmap, themeSource, layername, themeLayer
-var url = 'http://116.196.88.174:8090/iserver/services/data-swmm/rest/data'
-
+// var url = 'http://116.196.88.174:8090/iserver/services/data-swmm/rest/data'
+var url = 'http://121.248.96.215:8091/iserver/services/data-swmm/rest/data'
 function setMap (map) {
   SMmap = map
 }
@@ -193,16 +193,17 @@ function getnum (num) {
  * 使用ajax向后台传递数据：id，根据id查询数据库，返回经流量数据
  * @param {*} id
  */
-function postajax (id) {
+function postajax (id, time) {
   $.ajax({
-    url: 'http://localhost:8088/dj',
+    url: 'http://121.248.96.215:8088/dj',
     type: 'POST',
     // contentType: 'application/json;charset=utf-8',
-    data: {'id': id},
+    data: {'id': id, 'time': time},
     dataType: 'json',
     success: function (result) {
       var rainflow = result.rainflow
       var lidrainflow = result.lidrainflow
+      console.log(lidrainflow)
       createEcharts.showRainflow(rainflow, lidrainflow)
     },
     error: function (msg) {
@@ -218,16 +219,21 @@ function postajax (id) {
  */
 function createInteraction (SMmap) {
   // 专题图层 mousemove 事件
-  themeSource.on('mousemove', function (e) {
-    if (e.target && e.target.refDataID) {
-      var fid = e.target.refDataID
-      var fea = themeSource.getFeatureById(fid)
-      var id = fea.attributes.SMID
-      postajax(id)
-      $('#slope').html(getnum(fea.attributes.MEAN_SLOPE))
-      $('#area').html(getnum(fea.attributes.AREA))
-    }
-  })
+  if (themeSource != null) {
+    themeSource.on('mousemove', function (e) {
+      if (e.target && e.target.refDataID) {
+        var fid = e.target.refDataID
+        var fea = themeSource.getFeatureById(fid)
+        var id = fea.attributes.SMID
+        var time = $('#rainTime').val()
+        postajax(id, time)
+        $('#slope').html(getnum(fea.attributes.MEAN_SLOPE))
+        $('#area').html(getnum(fea.attributes.AREA))
+      }
+    })
+  } else {
+    alert('请先加载子流域图层！')
+  }
 
   var pointerInteraction = new ol.interaction.Pointer({
     handleDownEvent: function (event) {

@@ -72,7 +72,7 @@ export default {
   height: 30%;
 }
 #echarts {
-    background-color: thistle;
+    background-color:rgb(223, 240, 223);
     height: 95%;
     border-radius:0px 0px 25px 25px;
     -moz-border-radius:25px;

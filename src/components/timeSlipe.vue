@@ -56,7 +56,7 @@ export default {
     },
     postajax: function (ufun) {
       $.ajax({
-        url: 'http://localhost:8088/' + ufun,
+        url: 'http://121.248.96.215:8088/' + ufun,
         type: 'POST',
         // contentType: 'application/json;charset=utf-8',
         data: {'time': time, 'cxq': cxq, 'yfxs': yfxs},
@@ -64,7 +64,11 @@ export default {
         success: function (result) {
           console.log('ok')
           myChart.hideLoading()
-          createTime.createTime(initMap.getMap())
+          if (ufun === 'calculateRainflow') {
+            createTime.createTime(initMap.getMap(), 1)
+          } else {
+            createTime.createTime(initMap.getMap(), 2)
+          }
         },
         error: function (msg) {
           console.log('failed')
